@@ -40,3 +40,18 @@ export default function CrmProfiles() {
             ))}
           </div>
         </div>
+{selected && (
+          <div className="lg:col-span-2 bg-surface border border-border rounded-lg overflow-hidden">
+            <div className="px-6 py-5 border-b border-border flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-semibold">{selected.initials}</div>
+              <div className="flex-1">
+                <p className="font-bold text-ink text-lg">{selected.fullName}</p>
+                <p className="text-sm text-ink-muted">{selected.market} · Stall {selected.stall}</p>
+              </div>
+              <StatusBadge status={selected.status} />
+            </div>
+            <div className="flex border-b border-border px-6">
+              {Object.entries(TABS).map(([id, label]) => (
+                <button key={id} onClick={() => setActiveTab(id)} className={`px-4 py-3 text-sm font-semibold border-b-2 -mb-px ${activeTab === id ? "border-primary text-primary" : "border-transparent text-ink-muted hover:text-ink"}`}>{label}</button>
+              ))}
+            </div>
