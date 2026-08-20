@@ -15,4 +15,14 @@ const RISK = {
   Medium: "bg-status-due-bg text-status-due-text border-status-due-border",
   Low: "bg-status-paid-bg text-status-paid-text border-status-paid-border",
 };
+const KpiCard = ({ label, data }) => (
+  <div className="bg-surface border border-border rounded-lg p-5">
+    <p className="text-xs uppercase text-ink-muted tracking-wide mb-2">{label}</p>
+    <p className="text-2xl font-bold text-ink mb-1">{data.value}</p>
+    <p className={TREND[data.trend] || "text-ink-muted text-xs"}>{data.change}</p>
+  </div>
+);
+const RiskBadge = ({ level }) => (
+  <span className={`text-xs font-semibold px-2 py-0.5 rounded border ${RISK[level]}`}>{level}</span>
+);
 
