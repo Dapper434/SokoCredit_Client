@@ -3,3 +3,11 @@ const PROFILES = [
   { name: "John M.", phone: "+254 700 000 002", status: "Active" },
   { name: "Grace W.", phone: "+254 700 000 003", status: "Overdue" },
 ];
+
+export default function CrmProfiles() {
+  return (
+    <div className="p-8">
+      <h1 className="text-2xl font-bold text-ink mb-1">CRM Profiles</h1>
+      <p className="text-ink-dim mb-8">All borrower and client records</p>
+      <div className="mb-6">
+        <input
