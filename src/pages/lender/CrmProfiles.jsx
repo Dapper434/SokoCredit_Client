@@ -55,3 +55,15 @@ export default function CrmProfiles() {
                 <button key={id} onClick={() => setActiveTab(id)} className={`px-4 py-3 text-sm font-semibold border-b-2 -mb-px ${activeTab === id ? "border-primary text-primary" : "border-transparent text-ink-muted hover:text-ink"}`}>{label}</button>
               ))}
             </div>
+   <div className="p-6">
+              {activeTab === "kyc" && <div className="grid grid-cols-2 gap-x-6 gap-y-4">{kyc.map(([label, value]) => <Field key={label} label={label} value={value} />)}</div>}
+              {activeTab === "loanHistory" && <p className="text-ink-muted text-sm">In-house score: {selected.inHouseScore ?? "—"}/100 · Tier {selected.tier}</p>}
+              {activeTab === "auditLog" && <p className="text-ink-muted text-sm">No audit events recorded yet.</p>}
+              {activeTab === "scoreHistory" && <p className="text-ink-muted text-sm">Current tier: <StatusBadge tier={selected.tier} /></p>}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
