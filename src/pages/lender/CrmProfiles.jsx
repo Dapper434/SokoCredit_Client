@@ -16,7 +16,7 @@ export default function CrmProfiles() {
           className="w-full max-w-md border border-border rounded-md px-4 py-2 text-ink focus:outline-none focus:border-primary"
         />
       </div>
- <div className="bg-surface border border-border rounded-lg overflow-hidden">
+    <div className="bg-surface border border-border rounded-lg overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-ground text-ink-muted text-xs uppercase tracking-wide">
             <tr>
@@ -25,3 +25,17 @@ export default function CrmProfiles() {
               <th className="text-left px-5 py-3">Status</th>
             </tr>
           </thead>
+           <tbody className="divide-y divide-border">
+            {PROFILES.map((row) => (
+              <tr key={row.phone} className="hover:bg-ground">
+                <td className="px-5 py-3 text-ink">{row.name}</td>
+                <td className="px-5 py-3 text-ink-dim">{row.phone}</td>
+                <td className="px-5 py-3 text-ink-dim">{row.status}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
