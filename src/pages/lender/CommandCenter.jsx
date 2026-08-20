@@ -45,4 +45,11 @@ export default function CommandCenter() {
             <span key={seg.label}>{seg.label}: <strong className="text-ink">{seg.value}%</strong></span>
           ))}
         </div>
+ </div>
+      <div className="bg-surface border border-border rounded-lg overflow-hidden">
+        <div className="px-5 py-4 border-b border-border"><h2 className="text-lg font-semibold text-ink">Market Cluster Risk</h2></div>
+        <table className="w-full text-sm">
+          <thead className="bg-ground text-ink-muted text-xs uppercase tracking-wide">
+            <tr>{["Market", "Loans", "PAR Rate", "Risk", "Status"].map((h) => <th key={h} className="text-left px-5 py-3">{h}</th>)}</tr>
+          </thead>
 
