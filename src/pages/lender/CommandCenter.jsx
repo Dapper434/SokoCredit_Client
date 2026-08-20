@@ -1,9 +1,19 @@
-import {
-  portfolioKpis,
-  parAgingBreakdown,
-  marketClusters,
-} from "../../data/mockLenderData";
 
+import { portfolioKpis, parAgingBreakdown, marketClusters } from "../../data/mockLenderData";
+
+const KPIS = [
+  ["Gross Loan Portfolio", portfolioKpis.grossLoanPortfolio],
+  ["PAR > 30 Days", portfolioKpis.parOver30],
+  ["NPL > 90 Days", portfolioKpis.nplOver90],
+  ["MTD Collection Efficiency", portfolioKpis.mtdCollectionEfficiency],
+  ["Net Interest Margin", portfolioKpis.netInterestMargin],
+];
+const TREND = { up: "text-status-overdue-text text-xs", down: "text-status-paid-text text-xs" };
+const RISK = {
+  High: "bg-status-missed-bg text-status-missed-text border-status-missed-border",
+  Medium: "bg-status-due-bg text-status-due-text border-status-due-border",
+  Low: "bg-status-paid-bg text-status-paid-text border-status-paid-border",
+};
 export default function CommandCenter() {
   return (
     <div className="p-8">
@@ -12,33 +22,14 @@ export default function CommandCenter() {
         Thursday, 20 August 2026
       </p>
 
-      {/* KPI cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
-        <KpiCard label="Gross Loan Portfolio" data={portfolioKpis.grossLoanPortfolio} />
-        <KpiCard label="PAR > 30 Days" data={portfolioKpis.parOver30} />
-        <KpiCard label="NPL > 90 Days" data={portfolioKpis.nplOver90} />
-        <KpiCard label="MTD Collection Efficiency" data={portfolioKpis.mtdCollectionEfficiency} />
-        <KpiCard label="Net Interest Margin" data={portfolioKpis.netInterestMargin} />
+        {KPIS.map(([label, data]) => <KpiCard key={label} label={label} data={data} />)}
       </div>
-
-      {/* PAR Aging breakdown (simple bar version — no charting lib needed) */}
       <div className="bg-surface border border-border rounded-lg p-5 mb-8">
         <h2 className="text-lg font-semibold text-ink mb-4">PAR Aging Breakdown</h2>
         <div className="flex h-4 rounded-full overflow-hidden mb-4">
           {parAgingBreakdown.map((seg) => (
-            <div
-              key={seg.label}
-              style={{ width: `${seg.value}%` }}
-              className={
-                seg.color === "green"
-                  ? "bg-status-paid-border"
-                  : seg.color === "orange"
-                  ? "bg-status-missed-border"
-                  : seg.color === "red"
-                  ? "bg-status-overdue-border"
-                  : "bg-status-overdue-text"
-              }
-            />
+            <div key={seg.label} style={{ width: `${seg.value}%` }} className={seg.color === "green" ? "bg-status-paid-border" : seg.color === "orange" ? "bg-status-missed-border" : seg.color === "red" ? "bg-status-overdue-border" : "bg-status-overdue-text"} />
           ))}
         </div>
         <div className="flex flex-wrap gap-4 text-sm text-ink-dim">
