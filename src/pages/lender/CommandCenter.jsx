@@ -23,3 +23,18 @@ export default function CommandCenter() {
           </div>
         ))}
         </div>
+
+         <div className="bg-surface border border-border rounded-lg p-5">
+        <h2 className="text-lg font-semibold text-ink mb-4">Recent Activity</h2>
+        <ul className="divide-y divide-border">
+          {ACTIVITY.map((item) => (
+            <li key={item.text} className="py-3 flex justify-between text-sm">
+              <span className="text-ink">{item.text}</span>
+              <span className="text-ink-muted">{item.when}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
