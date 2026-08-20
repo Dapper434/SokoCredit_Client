@@ -25,4 +25,18 @@ const KpiCard = ({ label, data }) => (
 const RiskBadge = ({ level }) => (
   <span className={`text-xs font-semibold px-2 py-0.5 rounded border ${RISK[level]}`}>{level}</span>
 );
+export default function CommandCenter() {
+  return (
+    <div className="p-8">
+      <h1 className="text-2xl font-bold text-ink mb-1">Command Center</h1>
+      <p className="text-ink-dim mb-8">Thursday, 20 August 2026</p>
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+        {KPIS.map(([label, data]) => <KpiCard key={label} label={label} data={data} />)}
+      </div>
+      <div className="bg-surface border border-border rounded-lg p-5 mb-8">
+        <h2 className="text-lg font-semibold text-ink mb-4">PAR Aging Breakdown</h2>
+        <div className="flex h-4 rounded-full overflow-hidden mb-4">
+          {parAgingBreakdown.map((seg) => (
+            <div key={seg.label} style={{ width: `${seg.value}%` }} className={BAR[seg.color] || "bg-status-overdue-text"} />
+          ))}
 
