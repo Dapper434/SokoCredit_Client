@@ -10,6 +10,9 @@ import CrmProfiles from "../pages/lender/CrmProfiles";
 export default function LenderRoutes() {
   return (
     <Routes>
+      <Route path="/" element={<Navigate to="/lender/signin" replace />} />
+
+
       {/* Auth screens — no sidebar */}
       <Route path="/lender/signin" element={<SignIn />} />
       <Route path="/lender/mfa" element={<TwoFactorAuth />} />
