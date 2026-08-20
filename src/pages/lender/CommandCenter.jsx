@@ -52,4 +52,19 @@ export default function CommandCenter() {
           <thead className="bg-ground text-ink-muted text-xs uppercase tracking-wide">
             <tr>{["Market", "Loans", "PAR Rate", "Risk", "Status"].map((h) => <th key={h} className="text-left px-5 py-3">{h}</th>)}</tr>
           </thead>
-
+ <tbody className="divide-y divide-border">
+            {marketClusters.map((m) => (
+              <tr key={m.market} className="hover:bg-ground">
+                <td className="px-5 py-3 text-ink font-medium">{m.market}</td>
+                <td className="px-5 py-3 text-ink-dim">{m.loans}</td>
+                <td className="px-5 py-3 text-ink-dim">{m.parRate}</td>
+                <td className="px-5 py-3"><RiskBadge level={m.risk} /></td>
+                <td className="px-5 py-3">{m.disruption ? <span className="text-status-overdue-text text-xs font-semibold">⚠️ Disruption flag</span> : <span className="text-ink-muted text-xs">Normal</span>}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
