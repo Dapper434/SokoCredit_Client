@@ -11,3 +11,8 @@ export default function CrmProfiles() {
       <p className="text-ink-dim mb-8">All borrower and client records</p>
       <div className="mb-6">
         <input
+        type="search"
+          placeholder="Search by name, phone, or ID..."
+          className="w-full max-w-md border border-border rounded-md px-4 py-2 text-ink focus:outline-none focus:border-primary"
+        />
+      </div>
