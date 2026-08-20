@@ -16,3 +16,12 @@ export default function CrmProfiles() {
           className="w-full max-w-md border border-border rounded-md px-4 py-2 text-ink focus:outline-none focus:border-primary"
         />
       </div>
+ <div className="bg-surface border border-border rounded-lg overflow-hidden">
+        <table className="w-full text-sm">
+          <thead className="bg-ground text-ink-muted text-xs uppercase tracking-wide">
+            <tr>
+              <th className="text-left px-5 py-3">Name</th>
+              <th className="text-left px-5 py-3">Phone</th>
+              <th className="text-left px-5 py-3">Status</th>
+            </tr>
+          </thead>
