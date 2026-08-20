@@ -39,4 +39,10 @@ export default function CommandCenter() {
           {parAgingBreakdown.map((seg) => (
             <div key={seg.label} style={{ width: `${seg.value}%` }} className={BAR[seg.color] || "bg-status-overdue-text"} />
           ))}
+ </div>
+        <div className="flex flex-wrap gap-4 text-sm text-ink-dim">
+          {parAgingBreakdown.map((seg) => (
+            <span key={seg.label}>{seg.label}: <strong className="text-ink">{seg.value}%</strong></span>
+          ))}
+        </div>
 
