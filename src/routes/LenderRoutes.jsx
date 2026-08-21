@@ -21,7 +21,10 @@ export default function LenderRoutes() {
       <Route path="/" element={<PortalSelect />} />
 
       {/* Auth screens — These render without the sidebar */}
-      {/* We will add auth screens here shortly! */}
+      <Route path="/lender/signin" element={<SignIn />} />
+      <Route path="/lender/mfa" element={<TwoFactorAuth />} />
+      <Route path="/lender/register" element={<RegisterStep1 />} />
+      <Route path="/lender/register/settlement" element={<RegisterStep2 />} />
       
       {/* App screens — These render inside the LenderLayout (with sidebar) */}
       {/* We will add the app screens here shortly! */}
