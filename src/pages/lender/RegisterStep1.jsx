@@ -159,7 +159,55 @@ export default function RegisterStep1() {
             </div>
           </div>
 
-          {/* We will add the Office Address, Map, and Submit button here */}
+          {/* Head Office Address */}
+          <div className="mb-5">
+            <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
+              Head Office Address
+            </label>
+            <input
+              type="text"
+              name="head_office_address"
+              value={form.head_office_address}
+              onChange={handleChange}
+              placeholder="Street, building, town"
+              className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
+                         placeholder:text-ink-muted/50
+                         focus:outline-none focus:border-primary transition-colors"
+            />
+          </div>
+
+          {/* Map placeholder (Visual only for now) */}
+          <div className="border border-border-dim rounded-lg bg-ground/50 flex flex-col items-center justify-center py-10 mb-6">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-8 h-8 text-primary mb-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={1.5}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+            </svg>
+            <p className="text-sm text-ink-dim">Address geocodes to map pin</p>
+            <p className="text-xs text-ink-muted mt-0.5">Google Maps Places API</p>
+          </div>
+
+          {/* Form Submit Button */}
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              disabled={!isValid}
+              className={`px-8 py-3 rounded-md font-semibold transition-all duration-200
+                ${
+                  isValid
+                    ? "bg-primary hover:bg-primary-hover text-white cursor-pointer"
+                    : "bg-ground-dim text-ink-muted cursor-not-allowed"
+                }`}
+            >
+              Continue to Settlement Details
+            </button>
+          </div>
         </form>
 
       </div>
