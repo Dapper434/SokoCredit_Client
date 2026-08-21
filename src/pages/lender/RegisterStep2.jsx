@@ -176,7 +176,40 @@ export default function RegisterStep2() {
             </div>
           </div>
 
-          {/* We will add the Compliance Notice, Error State, and Submit button here */}
+          {/* Compliance notice */}
+          <div className="border border-primary/30 bg-compliance-bg rounded-lg px-5 py-4 mb-6">
+            <p className="text-sm font-semibold text-primary mb-1">
+              Platform Compliance Review
+            </p>
+            <p className="text-xs text-ink-dim leading-relaxed">
+              Your submission enters a platform-level compliance queue. The first
+              Super Admin account activates once approved. This review is
+              independent from your institution's internal Maker-Checker desk.
+            </p>
+          </div>
+
+          {/* Error message display */}
+          {error && (
+            <div className="bg-status-overdue-bg border border-status-overdue-border text-status-overdue-text text-sm rounded-md px-4 py-3 mb-4">
+              {error}
+            </div>
+          )}
+
+          {/* Final Submit Button */}
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              disabled={!isValid || submitting}
+              className={`px-8 py-3 rounded-md font-semibold transition-all duration-200
+                ${
+                  isValid && !submitting
+                    ? "bg-primary hover:bg-primary-hover text-white cursor-pointer"
+                    : "bg-ground-dim text-ink-muted cursor-not-allowed"
+                }`}
+            >
+              {submitting ? "Submitting…" : "Submit for Review"}
+            </button>
+          </div>
         </form>
       </div>
     </div>
