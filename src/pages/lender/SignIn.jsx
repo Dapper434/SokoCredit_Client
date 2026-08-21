@@ -44,7 +44,30 @@ export default function SignIn() {
           <h1 className="text-3xl font-bold text-ink mb-1">Lender Portal</h1>
           <p className="text-ink-muted text-sm mb-8">Staff sign-in</p>
 
-          {/* We will add the Form and Links here shortly */}
+          {/* Authentication Form Card */}
+          <form
+            onSubmit={handleSubmit}
+            className="bg-surface border border-border-dim rounded-lg p-6"
+          >
+            {/* Email Input Field */}
+            <label className="block text-xs font-semibold text-ink-dim uppercase tracking-wide mb-2">
+              Email Address
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="staff@institution.co.ke"
+              className="w-full border border-border rounded-md px-4 py-3 mb-5 text-ink
+                         placeholder:text-ink-muted/50 bg-transparent
+                         focus:outline-none focus:border-primary transition-colors"
+              required
+            />
+
+            {/* We will add the Password input and Submit button here */}
+          </form>
+
+          {/* We will add the Registration Link here shortly */}
         </div>
       </div>
       
