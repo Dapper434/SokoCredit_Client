@@ -91,7 +91,7 @@ export default function SignIn() {
                 }`}
             >
               Continue to Verification
-            </button
+            </button>
           </form>
 
           {/* Registration link below the form for new institutions */}
@@ -103,7 +103,7 @@ export default function SignIn() {
             >
               Begin onboarding
             </button>
-          </p
+          </p>
         </div>
       </div>
       
