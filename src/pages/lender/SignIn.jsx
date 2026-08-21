@@ -1,23 +1,33 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { login, saveSession } from "../../lib/api";
 
 export default function SignIn() {
-  // State to hold the user's input values
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+
   const navigate = useNavigate();
 
-  // Simple validation: Ensure neither field is left empty
   const isFormValid = email.trim() !== "" && password.trim() !== "";
 
-  // Process the sign-in when the user submits the form
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent page reload
-    if (!isFormValid) return; // Block submission if invalid
-    
-    // In a real app we'd call an API here. For now, navigate to the next step
-    navigate("/lender/mfa");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!isFormValid || submitting) return;
+
+    setSubmitting(true);
+    setError("");
+
+    try {
+      const data = await login(email.trim(), password);
+      saveSession(data);
+      navigate("/lender/mfa");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -79,18 +89,23 @@ export default function SignIn() {
               required
             />
 
-            {/* Submit Button (Disables automatically if form is invalid) */}
+            {error && (
+              <div className="bg-status-overdue-bg border border-status-overdue-border text-status-overdue-text text-sm rounded-md px-4 py-3 mb-4">
+                {error}
+              </div>
+            )}
+
             <button
               type="submit"
-              disabled={!isFormValid}
+              disabled={!isFormValid || submitting}
               className={`w-full font-semibold py-3 rounded-md transition-all duration-200
                 ${
-                  isFormValid
+                  isFormValid && !submitting
                     ? "bg-primary hover:bg-primary-hover text-white cursor-pointer"
                     : "bg-ground-dim text-ink-muted cursor-not-allowed"
                 }`}
             >
-              Continue to Verification
+              {submitting ? "Signing in…" : "Continue to Verification"}
             </button>
           </form>
 

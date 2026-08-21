@@ -1,19 +1,21 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { saveSession, signupOrganization, toOrganizationSlug } from "../../lib/api";
 
 export default function RegisterStep2() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Retrieve the data passed from Step 1 so we can bundle it all together
   const step1Data = location.state?.step1 || {};
 
-  // Form state for operational and settlement details
   const [form, setForm] = useState({
     disbursement_account: "",
     collection_paybill_number: "",
     default_interest_rate: "",
     default_penalty_rate: "",
+    admin_full_name: "",
+    admin_email: "",
+    admin_password: "",
   });
 
   // Loading and error states for the API submission
@@ -24,14 +26,16 @@ export default function RegisterStep2() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  // Basic validation: ensure all required inputs have values
   const isValid =
+    step1Data.registered_business_name?.trim() &&
     form.disbursement_account.trim() &&
     form.collection_paybill_number.trim() &&
     form.default_interest_rate.trim() &&
-    form.default_penalty_rate.trim();
+    form.default_penalty_rate.trim() &&
+    form.admin_full_name.trim() &&
+    form.admin_email.trim() &&
+    form.admin_password.length >= 8;
 
-  // Handle the final submission to the backend API
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isValid) return;
@@ -39,26 +43,20 @@ export default function RegisterStep2() {
     setSubmitting(true);
     setError("");
 
-    // Combine step 1 and step 2 data, formatting numbers correctly
     const payload = {
-      ...step1Data,
-      ...form,
-      default_interest_rate: parseFloat(form.default_interest_rate),
-      default_penalty_rate: parseFloat(form.default_penalty_rate),
+      name: step1Data.registered_business_name.trim(),
+      slug: toOrganizationSlug(
+        step1Data.registered_business_name,
+        step1Data.registration_number,
+      ),
+      admin_email: form.admin_email.trim(),
+      admin_password: form.admin_password,
+      admin_full_name: form.admin_full_name.trim(),
     };
 
     try {
-      // Mock API call to create the institution
-      const res = await fetch("http://localhost:5000/api/v1/institutions", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Submission failed");
-
-      // On success, redirect to the dashboard
+      const data = await signupOrganization(payload);
+      saveSession(data);
       navigate("/lender/dashboard");
     } catch (err) {
       setError(err.message);
@@ -168,6 +166,68 @@ export default function RegisterStep2() {
                 value={form.default_penalty_rate}
                 onChange={handleChange}
                 placeholder="e.g. 5"
+                className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
+                           placeholder:text-ink-muted/50
+                           focus:outline-none focus:border-primary transition-colors"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="border-t border-border-dim pt-6 mb-6">
+            <h2 className="text-sm font-semibold text-ink mb-1">
+              Administrator Account
+            </h2>
+            <p className="text-xs text-ink-dim mb-5">
+              This account becomes your institution&apos;s first admin on SokoCredit.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+              <div>
+                <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  name="admin_full_name"
+                  value={form.admin_full_name}
+                  onChange={handleChange}
+                  placeholder="e.g. Jane Kamau"
+                  className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
+                             placeholder:text-ink-muted/50
+                             focus:outline-none focus:border-primary transition-colors"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
+                  Work Email
+                </label>
+                <input
+                  type="email"
+                  name="admin_email"
+                  value={form.admin_email}
+                  onChange={handleChange}
+                  placeholder="admin@institution.co.ke"
+                  className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
+                             placeholder:text-ink-muted/50
+                             focus:outline-none focus:border-primary transition-colors"
+                  required
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
+                Password
+              </label>
+              <input
+                type="password"
+                name="admin_password"
+                value={form.admin_password}
+                onChange={handleChange}
+                placeholder="Minimum 8 characters"
+                minLength={8}
                 className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
                            placeholder:text-ink-muted/50
                            focus:outline-none focus:border-primary transition-colors"

@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-// We import mock institution data to display the user's name in the sidebar
+import { clearSession } from "../../lib/api";
 import { institution } from "../../data/mockLenderData";
 
 // Navigation links for the sidebar
@@ -13,8 +13,8 @@ const navItems = [
 export default function LenderLayout() {
   const navigate = useNavigate();
 
-  // Handles signing out and returning to the landing page
   const handleSignOut = () => {
+    clearSession();
     navigate("/");
   };
 
