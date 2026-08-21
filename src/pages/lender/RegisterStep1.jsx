@@ -70,7 +70,43 @@ export default function RegisterStep1() {
           onSubmit={handleContinue}
           className="bg-surface border border-border-dim rounded-lg p-6 md:p-8"
         >
-          {/* We will add form fields here next! */}
+          {/* Row 1: Business Name + BRS Number */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+            <div>
+              <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
+                Registered Business Name
+              </label>
+              <input
+                type="text"
+                name="registered_business_name"
+                value={form.registered_business_name}
+                onChange={handleChange}
+                placeholder="e.g. Jua Sunny Ltd"
+                className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
+                           placeholder:text-ink-muted/50
+                           focus:outline-none focus:border-primary transition-colors"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
+                BRS Registration Number
+              </label>
+              <input
+                type="text"
+                name="registration_number"
+                value={form.registration_number}
+                onChange={handleChange}
+                placeholder="PVT-008080"
+                className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
+                           placeholder:text-ink-muted/50
+                           focus:outline-none focus:border-primary transition-colors"
+                required
+              />
+            </div>
+          </div>
+
+          {/* We will add Row 2 fields next! */}
         </form>
 
       </div>
