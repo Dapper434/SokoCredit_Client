@@ -44,7 +44,34 @@ export default function LenderLayout() {
           </div>
         </div>
 
-        {/* We will add the navigation links and sign out button here */}
+        {/* Navigation menu mapping through navItems */}
+        <nav className="flex-1 p-4 space-y-1">
+          {navItems.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={({ isActive }) =>
+                `block px-4 py-2.5 rounded-md text-sm font-medium ${
+                  isActive
+                    ? "bg-primary text-white"
+                    : "text-white/70 hover:bg-sidebar-item-bg"
+                }`
+              }
+            >
+              {item.label}
+            </NavLink>
+          ))}
+        </nav>
+
+        {/* Footer of the sidebar with Sign Out functionality */}
+        <div className="p-4 border-t border-white/10">
+          <button
+            onClick={handleSignOut}
+            className="text-sm text-white/70 hover:text-white flex items-center gap-2 cursor-pointer"
+          >
+            Sign Out
+          </button>
+        </div>
       </aside>
 
       {/* Main content area where child routes render */}
