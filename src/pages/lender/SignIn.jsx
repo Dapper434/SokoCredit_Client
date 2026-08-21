@@ -79,10 +79,31 @@ export default function SignIn() {
               required
             />
 
-            {/* We will add the Submit button here */}
+            {/* Submit Button (Disables automatically if form is invalid) */}
+            <button
+              type="submit"
+              disabled={!isFormValid}
+              className={`w-full font-semibold py-3 rounded-md transition-all duration-200
+                ${
+                  isFormValid
+                    ? "bg-primary hover:bg-primary-hover text-white cursor-pointer"
+                    : "bg-ground-dim text-ink-muted cursor-not-allowed"
+                }`}
+            >
+              Continue to Verification
+            </button
           </form>
 
-          {/* We will add the Registration Link here shortly */}
+          {/* Registration link below the form for new institutions */}
+          <p className="text-center text-sm text-ink-muted mt-6">
+            Registering a new institution?{" "}
+            <button
+              onClick={() => navigate("/lender/register")}
+              className="text-primary font-semibold underline underline-offset-2 hover:text-primary-hover transition-colors cursor-pointer"
+            >
+              Begin onboarding
+            </button>
+          </p
         </div>
       </div>
       
