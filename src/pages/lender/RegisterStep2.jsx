@@ -136,7 +136,47 @@ export default function RegisterStep2() {
             </div>
           </div>
 
-          {/* We will add the Interest/Penalty rates and Submit button here */}
+          {/* Row 2: Default Interest Rate + Penalty Rate */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+            <div>
+              <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
+                Default Interest Rate (%)
+              </label>
+              <input
+                type="number"
+                step="0.01"
+                min="0"
+                name="default_interest_rate"
+                value={form.default_interest_rate}
+                onChange={handleChange}
+                placeholder="e.g. 15"
+                className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
+                           placeholder:text-ink-muted/50
+                           focus:outline-none focus:border-primary transition-colors"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
+                Default Penalty Rate (%)
+              </label>
+              <input
+                type="number"
+                step="0.01"
+                min="0"
+                name="default_penalty_rate"
+                value={form.default_penalty_rate}
+                onChange={handleChange}
+                placeholder="e.g. 5"
+                className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
+                           placeholder:text-ink-muted/50
+                           focus:outline-none focus:border-primary transition-colors"
+                required
+              />
+            </div>
+          </div>
+
+          {/* We will add the Compliance Notice, Error State, and Submit button here */}
         </form>
       </div>
     </div>
