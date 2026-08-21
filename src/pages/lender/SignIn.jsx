@@ -64,7 +64,22 @@ export default function SignIn() {
               required
             />
 
-            {/* We will add the Password input and Submit button here */}
+            {/* Password Input Field */}
+            <label className="block text-xs font-semibold text-ink-dim uppercase tracking-wide mb-2">
+              Password
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              className="w-full border border-border rounded-md px-4 py-3 mb-6 text-ink
+                         placeholder:text-ink-muted/50 bg-transparent
+                         focus:outline-none focus:border-primary transition-colors"
+              required
+            />
+
+            {/* We will add the Submit button here */}
           </form>
 
           {/* We will add the Registration Link here shortly */}
