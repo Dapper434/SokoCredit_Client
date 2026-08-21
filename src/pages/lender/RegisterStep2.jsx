@@ -100,7 +100,43 @@ export default function RegisterStep2() {
           onSubmit={handleSubmit}
           className="bg-surface border border-border-dim rounded-lg p-6 md:p-8"
         >
-          {/* We will add form fields here next! */}
+          {/* Row 1: Disbursement Bank Account + Collection Paybill */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+            <div>
+              <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
+                Disbursement Bank Account
+              </label>
+              <input
+                type="text"
+                name="disbursement_account"
+                value={form.disbursement_account}
+                onChange={handleChange}
+                placeholder="e.g. 1234567890 — Equity Bank"
+                className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
+                           placeholder:text-ink-muted/50
+                           focus:outline-none focus:border-primary transition-colors"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
+                M-Pesa Paybill / Till Number
+              </label>
+              <input
+                type="text"
+                name="collection_paybill_number"
+                value={form.collection_paybill_number}
+                onChange={handleChange}
+                placeholder="e.g. 123456"
+                className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
+                           placeholder:text-ink-muted/50
+                           focus:outline-none focus:border-primary transition-colors"
+                required
+              />
+            </div>
+          </div>
+
+          {/* We will add the Interest/Penalty rates and Submit button here */}
         </form>
       </div>
     </div>
