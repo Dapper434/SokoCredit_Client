@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @theme {
   /* Ground & Surfaces */
@@ -17,6 +18,15 @@
   --color-primary: #1B5E38;
   --color-primary-hover: #164D2E;
   --color-primary-light: #E8F5EE;
+
+  /* Portal page background */
+  --color-portal-bg: #1B5E38;
+  --color-portal-card-bg: rgba(255, 255, 255, 0.08);
+  --color-portal-card-border: rgba(255, 255, 255, 0.15);
+
+  /* Compliance notice */
+  --color-compliance-bg: #E8E2D8;
+  --color-compliance-border: #1B5E38;
 
   /* Status - Paid/Good */
   --color-status-paid-text: #15803D;
@@ -58,4 +68,7 @@
 
 body {
   margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
