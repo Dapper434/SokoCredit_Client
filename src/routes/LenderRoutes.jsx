@@ -27,7 +27,13 @@ export default function LenderRoutes() {
       <Route path="/lender/register/settlement" element={<RegisterStep2 />} />
       
       {/* App screens — These render inside the LenderLayout (with sidebar) */}
-      {/* We will add the app screens here shortly! */}
+      <Route path="/lender" element={<LenderLayout />}>
+        <Route index element={<Navigate to="dashboard" replace />} />
+        <Route path="dashboard" element={<CommandCenter />} />
+        <Route path="operations" element={<Operations />} />
+        <Route path="approvals" element={<ApprovalDesk />} />
+        <Route path="crm" element={<CrmProfiles />} />
+      </Route>
 
       {/* Catch-all fallback route - redirects unknown URLs back to the landing page */}
       <Route path="*" element={<Navigate to="/" replace />} />
