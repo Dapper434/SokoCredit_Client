@@ -13,8 +13,6 @@ export default function RegisterStep3() {
     airtel_money_till: "",
     default_interest_rate: "",
     default_penalty_rate: "",
-    admin_full_name: "",
-    admin_email: "",
     admin_password: "",
   });
 
@@ -32,8 +30,6 @@ export default function RegisterStep3() {
     form.airtel_money_till.trim() &&
     form.default_interest_rate.trim() &&
     form.default_penalty_rate.trim() &&
-    form.admin_full_name.trim() &&
-    form.admin_email.trim() &&
     form.admin_password.length >= 8;
 
   const handleSubmit = async (e) => {
@@ -43,15 +39,17 @@ export default function RegisterStep3() {
     setSubmitting(true);
     setError("");
 
+    const businessName = combinedData.registered_business_name || "Unknown Business";
+    const regNumber = combinedData.registration_number || "";
+    const email = combinedData.official_work_email || "admin@example.com";
+    const fullName = combinedData.director_full_name || "Admin User";
+
     const payload = {
-      name: step1Data.registered_business_name.trim(),
-      slug: toOrganizationSlug(
-        step1Data.registered_business_name,
-        step1Data.registration_number,
-      ),
-      admin_email: form.admin_email.trim(),
+      name: businessName.trim(),
+      slug: toOrganizationSlug(businessName, regNumber),
+      admin_email: email.trim(),
       admin_password: form.admin_password,
-      admin_full_name: form.admin_full_name.trim(),
+      admin_full_name: fullName.trim(),
     };
 
     try {
@@ -181,66 +179,25 @@ export default function RegisterStep3() {
             </div>
           </div>
 
-          <div className="border-t border-border-dim pt-6 mb-6">
-            <h2 className="text-sm font-semibold text-ink mb-1">
-              Administrator Account
+          <div className="mb-6 pb-6 border-b border-border-dim">
+            <h2 className="text-xs font-semibold text-accent uppercase tracking-wide mb-2">
+              Administrator Password
             </h2>
-            <p className="text-xs text-ink-dim mb-5">
-              This account becomes your institution&apos;s first admin on SokoCredit.
+            <p className="text-[10px] text-ink-dim mb-3">
+              Set a secure password for your institution's primary director account ({combinedData.official_work_email || "your email"}).
             </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
-              <div>
-                <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  name="admin_full_name"
-                  value={form.admin_full_name}
-                  onChange={handleChange}
-                  placeholder="e.g. Jane Kamau"
-                  className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
-                             placeholder:text-ink-muted/50
-                             focus:outline-none focus:border-primary transition-colors"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
-                  Work Email
-                </label>
-                <input
-                  type="email"
-                  name="admin_email"
-                  value={form.admin_email}
-                  onChange={handleChange}
-                  placeholder="admin@institution.co.ke"
-                  className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
-                             placeholder:text-ink-muted/50
-                             focus:outline-none focus:border-primary transition-colors"
-                  required
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
-                Password
-              </label>
-              <input
-                type="password"
-                name="admin_password"
-                value={form.admin_password}
-                onChange={handleChange}
-                placeholder="Minimum 8 characters"
-                minLength={8}
-                className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
-                           placeholder:text-ink-muted/50
-                           focus:outline-none focus:border-primary transition-colors"
-                required
-              />
-            </div>
+            <input
+              type="password"
+              name="admin_password"
+              value={form.admin_password}
+              onChange={handleChange}
+              placeholder="Minimum 8 characters"
+              minLength={8}
+              className="w-full md:w-1/2 border border-border rounded-md px-4 py-3 text-ink bg-transparent
+                         placeholder:text-ink-muted/50
+                         focus:outline-none focus:border-primary transition-colors"
+              required
+            />
           </div>
 
           {/* Compliance notice */}
