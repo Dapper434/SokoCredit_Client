@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { saveSession, signupOrganization, toOrganizationSlug } from "../../lib/api";
 
-export default function RegisterStep2() {
+export default function RegisterStep3() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const step1Data = location.state?.step1 || {};
+  const combinedData = location.state?.combinedData || {};
 
   const [form, setForm] = useState({
     disbursement_account: "",
@@ -70,10 +70,10 @@ export default function RegisterStep2() {
     <div className="min-h-screen bg-ground px-4 py-8">
       <div className="w-full max-w-2xl mx-auto">
         
-        {/* Navigation back to step 1 (preserving data) */}
+        {/* Navigation back to step 2 (preserving data) */}
         <button
           onClick={() =>
-            navigate("/lender/register", { state: { step1: step1Data } })
+            navigate("/lender/register/compliance", { state: { step1: combinedData } })
           }
           className="text-ink-muted text-sm flex items-center gap-1.5 hover:text-ink transition-colors mb-4 cursor-pointer"
         >
@@ -82,9 +82,11 @@ export default function RegisterStep2() {
 
         {/* Breadcrumb step indicator */}
         <div className="flex items-center gap-2 mb-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-primary inline-block" />
-          <span className="text-xs tracking-[0.15em] text-ink-muted uppercase font-medium">
-            Step 2 of 2 — Operational & Settlement
+          <span className="w-8 h-1 rounded-full bg-primary inline-block" />
+          <span className="w-8 h-1 rounded-full bg-primary inline-block" />
+          <span className="w-8 h-1 rounded-full bg-primary inline-block" />
+          <span className="text-xs tracking-[0.15em] text-ink-muted uppercase font-medium ml-2">
+            Step 3 of 3
           </span>
         </div>
 
