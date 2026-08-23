@@ -259,3 +259,15 @@ export default function StaffAccess() {
                 An invitation will be sent to the work email. Staff must sign in using their corporate domain email. No public sign-up is available.
               </p>
             </div>
+              <button
+              onClick={() => setShowInvite(false)}
+              disabled={!inviteValid}
+              className={`w-full py-2.5 rounded text-sm font-semibold transition-colors ${
+                !inviteValid ? "bg-border text-ink-muted cursor-not-allowed" : "bg-primary text-white hover:bg-primary-hover"
+              }`}
+            >
+              Send Invitation
+            </button>
+          </div>
+        </div>
+      )}
