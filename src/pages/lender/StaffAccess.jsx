@@ -246,3 +246,16 @@ export default function StaffAccess() {
                       className={`px-2.5 py-1 rounded text-[11px] font-semibold border transition-colors ${
                         inviteMarkets.includes(m) ? "bg-primary text-white border-primary" : "bg-surface text-ink-dim border-border hover:border-primary"
                       }`}
+                           >
+                      {m}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="p-3 rounded bg-ground border border-border">
+              <p className="text-[11px] text-ink-muted leading-relaxed">
+                An invitation will be sent to the work email. Staff must sign in using their corporate domain email. No public sign-up is available.
+              </p>
+            </div>
