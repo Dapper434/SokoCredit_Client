@@ -1,9 +1,11 @@
 const STATUS_STYLES = {
   paid: "bg-status-paid-bg text-status-paid-text border border-status-paid-border",
+  active: "bg-status-paid-bg text-status-paid-text border border-status-paid-border",
   due: "bg-status-due-bg text-status-due-text border border-status-due-border",
   missed: "bg-status-missed-bg text-status-missed-text border border-status-missed-border",
   partial: "bg-status-missed-bg text-status-missed-text border border-status-missed-border",
   overdue: "bg-status-overdue-bg text-status-overdue-text border border-status-overdue-border",
+  defaulted: "bg-status-overdue-bg text-status-overdue-text border border-status-overdue-border",
   pending: "bg-status-pending-bg text-status-pending-text border border-status-pending-border",
   restructured: "bg-status-restructured-bg text-status-restructured-text border border-status-restructured-border",
 };
