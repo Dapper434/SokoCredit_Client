@@ -35,3 +35,7 @@ export default function StaffAccess() {
   const bmCount = staffRoster.filter((s) => s.role === "branch_manager").length;
   const loCount = staffRoster.filter((s) => s.role === "loan_officer").length;
   const marketCount = [...new Set(staffRoster.flatMap((s) => s.markets).filter((m) => m !== "All"))].length;
+
+  const fieldForChange = changeableFields.find((f) => f.key === showChangeReq);
+  const inviteValid = inviteName && inviteEmail && !(inviteRole === "loan_officer" && inviteMarkets.length === 0);
+  const changeValid = changeNewValue && changeReason;
