@@ -307,3 +307,18 @@ export default function StaffAccess() {
                 This request will show as <strong>Pending SokoCredit Review</strong> until approved. Changes only take effect after SokoCredit compliance approves them.
               </p>
             </div>
+<button
+              onClick={() => setShowChangeReq(null)}
+              disabled={!changeValid}
+              className={`w-full py-2.5 rounded text-sm font-semibold transition-colors ${
+                !changeValid ? "bg-border text-ink-muted cursor-not-allowed" : "bg-primary text-white hover:bg-primary-hover"
+              }`}
+            >
+              Submit Change Request
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
