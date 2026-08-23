@@ -60,3 +60,8 @@ export default function StaffAccess() {
        {/* Staff roster */}
       <div className="bg-surface border border-border rounded overflow-hidden">
         <div className="flex items-center justify-between px-5 py-3.5 border-b border-border bg-ground"></div>
+          <h2 className="text-sm font-bold text-ink">Staff Roster</h2>
+          <button
+            onClick={() => setShowInvite(true)}
+            className="flex items-center gap-2 px-3 py-1.5 rounded bg-primary text-white text-xs font-semibold hover:bg-primary-hover transition-colors"
+          ></button>
