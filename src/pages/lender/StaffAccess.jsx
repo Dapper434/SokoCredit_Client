@@ -181,3 +181,10 @@ export default function StaffAccess() {
                     {h}
                   </th>
                 ))}
+                  </tr>
+            </thead>
+            <tbody>
+              {changeRequests.map((cr) => (
+                <tr key={cr.id} className="border-t border-border-dim">
+                  <td className="py-3 pr-4 text-xs font-semibold text-ink">{cr.field}</td>
+                  <td className="py-3 pr-4 text-xs font-mono text-ink-muted line-through">{cr.oldValue}</td>
