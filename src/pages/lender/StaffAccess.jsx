@@ -113,3 +113,14 @@ export default function StaffAccess() {
                 <td className="px-4 py-3 text-xs text-ink-dim font-mono">{s.markets.join(", ")}</td>
                 <td className="px-4 py-3 text-sm font-mono font-semibold text-ink">{s.borrowers > 0 ? s.borrowers : "—"}</td>
                 <td className="px-4 py-3 text-xs text-ink-muted font-mono">{s.lastActive}</td>
+                  <td className="px-4 py-3">
+                  <span className={text-[10px] font-mono font-semibold px-2 py-0.5 rounded border ${STAFF_STATUS_STYLES[s.status]}}>
+                    {s.status.charAt(0).toUpperCase() + s.status.slice(1)}
+                  </span>
+                </td>
+                <td className="px-4 py-3">
+                  <div className="flex items-center gap-1.5">
+                    {s.status === "invited" ? (
+                      <button className="text-[10px] font-mono text-status-due-text hover:underline">Resend invite</button>
+                    ) : (
+                      <></>
