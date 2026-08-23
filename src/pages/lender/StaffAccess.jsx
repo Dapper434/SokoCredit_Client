@@ -302,3 +302,8 @@ export default function StaffAccess() {
                 <textarea value={changeReason} onChange={(e) => setChangeReason(e.target.value)} placeholder="Explain why this change is needed..." rows={3} className="px-3 py-2 rounded border border-border text-sm bg-surface resize-none focus:outline-none focus:ring-2 focus:ring-primary" />
               </div>
             </div>
+                <div className="p-3 rounded bg-status-due-bg border border-status-due-border">
+              <p className="text-[11px] text-status-due-text leading-relaxed">
+                This request will show as <strong>Pending SokoCredit Review</strong> until approved. Changes only take effect after SokoCredit compliance approves them.
+              </p>
+            </div>
