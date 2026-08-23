@@ -54,8 +54,7 @@ export default function PortalSelect() {
             </p>
           </div>
           {/* Mobile indicator tag */}
-          <div className="flex items-center gap-2 text-white/50 group-hover:text-white/70 transition-colors">
-            <span className="text-xs border border-white/20 rounded px-2 py-0.5 font-mono">
+          <div className="flex items-center gap-2 text-white/50 group-hover:text-white/70 transition-colors">            <span className="text-xs border border-white/20 rounded px-2 py-0.5 font-mono">
               Mobile-first
             </span>
             <svg
