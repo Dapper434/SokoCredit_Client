@@ -27,3 +27,5 @@ export default function CustomerOtp() {
           <h1 className="text-2xl font-bold text-white mb-1">Enter OTP</h1>
           <p className="text-sm text-white/70">Code sent to {phone}</p>
         </div>
+       <div className="flex-1 bg-ground rounded-t-[20px] -mt-4 px-6 pt-8 pb-6 flex flex-col gap-8">
+          <OtpInput length={6} onComplete={() => {}} />
