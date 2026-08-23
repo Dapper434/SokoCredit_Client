@@ -53,4 +53,72 @@ export default function RegisterStep2() {
     const combinedData = { ...step1Data, ...form };
     navigate("/lender/register/settlement", { state: { combinedData } });
   };
+  return (
+    <div className="min-h-screen bg-ground px-4 py-8">
+      <div className="w-full max-w-3xl mx-auto">
+        
+        {/* Navigation back to step 1 (preserving data) */}
+        <button
+          onClick={() => navigate("/lender/register")}
+          className="text-ink-muted text-sm flex items-center gap-1.5 hover:text-ink transition-colors mb-4 cursor-pointer"
+        >
+          ← Back
+        </button>
 
+        {/* Breadcrumb step indicator */}
+        <div className="flex items-center gap-2 mb-2">
+          <span className="w-8 h-1 rounded-full bg-primary inline-block" />
+          <span className="w-8 h-1 rounded-full bg-primary inline-block" />
+          <span className="w-8 h-1 rounded-full bg-ground-dim inline-block" />
+          <span className="text-xs tracking-[0.15em] text-ink-muted uppercase font-medium ml-2">
+            Step 2 of 3
+          </span>
+        </div>
+
+        {/* Page Title */}
+        <h1 className="text-2xl font-bold text-ink mb-6">
+          Regulatory Compliance, Operations & Staff Footprint
+        </h1>
+
+        {/* The main form container */}
+        <form
+          onSubmit={handleContinue}
+          className="bg-surface border border-border-dim rounded-lg p-6 md:p-8"
+        >
+          {/* Row 1: County Permit + ODPC Reg */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+            <div>
+              <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
+                County Single Business Permit No.
+              </label>
+              <input
+                type="text"
+                name="county_business_permit"
+                value={form.county_business_permit}
+                onChange={handleChange}
+                placeholder="e.g. NRB/SBP/2024/78432"
+                className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
+                           placeholder:text-ink-muted/50
+                           focus:outline-none focus:border-primary transition-colors mb-1"
+                required
+              />
+              <p className="text-[10px] text-ink-muted leading-relaxed">SBP issued by county government</p>
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
+                ODPC Data Controller Reg. No.
+              </label>
+              <input
+                type="text"
+                name="odpc_registration_number"
+                value={form.odpc_registration_number}
+                onChange={handleChange}
+                placeholder="e.g. ODPC/DC/2024/001"
+                className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
+                           placeholder:text-ink-muted/50
+                           focus:outline-none focus:border-primary transition-colors mb-1"
+                required
+              />
+              <p className="text-[10px] text-ink-muted leading-relaxed">Mandatory under Kenya Data Protection Act 2019</p>
+            </div>
+          </div>
