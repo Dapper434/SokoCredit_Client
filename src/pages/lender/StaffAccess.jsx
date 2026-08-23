@@ -171,3 +171,13 @@ export default function StaffAccess() {
             ))}
           </div>
         </div>
+         <div className="px-5 py-4">
+          <p className="text-[10px] font-semibold text-ink-muted uppercase tracking-widest mb-3">Request History</p>
+          <table className="w-full">
+            <thead>
+              <tr>
+                {["Field", "Current", "Requested", "Status", "Date", "Reason"].map((h) => (
+                  <th key={h} className="text-left text-[10px] font-semibold text-ink-muted uppercase tracking-wider pb-2 pr-4 font-mono">
+                    {h}
+                  </th>
+                ))}
