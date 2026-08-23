@@ -207,8 +207,8 @@ export default function StaffAccess() {
           <div className="bg-surface rounded border border-border w-full max-w-md p-5 flex flex-col gap-4" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-bold text-ink">Add Staff Member</h3>
-              <button onClick={() => setShowInvite(false)} className="text-ink-muted hover:text-ink"></button>
-                 <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+              <button onClick={() => setShowInvite(false)} className="text-ink-muted hover:text-ink">
+                <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
                   <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
               </button>
@@ -234,7 +234,6 @@ export default function StaffAccess() {
                   <option value="loan_officer">Loan Officer</option>
                 </select>
               </div>
-            </div>
                {inviteRole === "loan_officer" && (
               <div className="flex flex-col gap-1.5">
                 <label className="text-[10px] font-semibold text-ink-muted uppercase tracking-wider">Assigned Market Clusters (required)</label>
