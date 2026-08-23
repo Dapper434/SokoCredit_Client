@@ -227,3 +227,11 @@ export default function StaffAccess() {
                 <label className="text-[10px] font-semibold text-ink-muted uppercase tracking-wider">Phone (2547XXXXXXXX)</label>
                 <input type="tel" value={invitePhone} onChange={(e) => setInvitePhone(e.target.value)} placeholder="254722XXXXXX" className="px-3 py-2 rounded border border-border text-sm font-mono bg-surface focus:outline-none focus:ring-2 focus:ring-primary" />
               </div>
+               <div className="flex flex-col gap-1.5">
+                <label className="text-[10px] font-semibold text-ink-muted uppercase tracking-wider">Assigned Role</label>
+                <select value={inviteRole} onChange={(e) => setInviteRole(e.target.value)} className="px-3 py-2 rounded border border-border text-sm bg-surface focus:outline-none focus:ring-2 focus:ring-primary">
+                  <option value="branch_manager">Branch Manager</option>
+                  <option value="loan_officer">Loan Officer</option>
+                </select>
+              </div>
+            </div>
