@@ -200,3 +200,11 @@ export default function StaffAccess() {
           </table>
         </div>
       </div>
+
+       {/* Invite staff modal */}
+      {showInvite && (
+        <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-6" onClick={() => setShowInvite(false)}>
+          <div className="bg-surface rounded border border-border w-full max-w-md p-5 flex flex-col gap-4" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-bold text-ink">Add Staff Member</h3>
+              <button onClick={() => setShowInvite(false)} className="text-ink-muted hover:text-ink"></button>
