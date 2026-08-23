@@ -156,3 +156,10 @@ export default function StaffAccess() {
                 <div>
                   <p className="text-[10px] text-ink-muted font-semibold uppercase tracking-wide">{label}</p>
                   <p className="text-sm font-mono font-semibold text-ink mt-0.5">{current}</p>
+                     </div>
+                <button
+                  onClick={() => {
+                    setShowChangeReq(key);
+                    setChangeNewValue("");
+                    setChangeReason("");
+                  }}
