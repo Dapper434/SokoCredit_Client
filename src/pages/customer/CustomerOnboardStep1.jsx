@@ -1,0 +1,140 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import CustomerAuthFrame from "../../components/layout/CustomerAuthFrame";
+
+export default function CustomerOnboardStep1() {
+  const navigate = useNavigate();
+  const [fullName, setFullName] = useState("");
+  const [idNumber, setIdNumber] = useState("");
+  const [dob, setDob] = useState("");
+  const [gender, setGender] = useState("");
+  const [mpesaPhone, setMpesaPhone] = useState("");
+  const [photoUploaded, setPhotoUploaded] = useState(false);
+
+  const isValid = fullName.trim() !== "" && idNumber.trim() !== "";
+
+  const handleContinue = (e) => {
+    e.preventDefault();
+    if (!isValid) return;
+    navigate("/customer/onboarding/2", { state: { fullName } });
+  };
+
+  return (
+    <CustomerAuthFrame>
+      <div className="flex flex-col min-h-full">
+        <div className="bg-primary px-6 pt-8 pb-10">
+          <div className="flex items-center justify-between mb-6">
+            <button
+              onClick={() => navigate("/customer/signin")}
+              className="text-white/70 text-sm flex items-center gap-1.5 hover:text-white"
+            >
+              <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+                <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+              </svg>
+              Back
+            </button>
+            <span className="text-xs text-white/60 font-mono">Step 1 of 2</span>
+          </div>
+          <div className="w-full h-1 bg-white/20 rounded-full mb-5">
+            <div className="h-full w-1/2 bg-white rounded-full" />
+          </div>
+          <h1 className="text-xl font-bold text-white mb-1">Personal Identity</h1>
+          <p className="text-sm text-white/70">Required for account verification</p>
+        </div>
+
+        <form
+          onSubmit={handleContinue}
+          className="flex-1 bg-ground rounded-t-[20px] -mt-4 px-6 pt-8 pb-6 flex flex-col gap-4"
+        >
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">Full Legal Name</label>
+            <input
+              type="text"
+              placeholder="As on National ID"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              className="w-full px-4 py-3 rounded-md border border-border text-sm font-medium text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+            />
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">National ID Number</label>
+            <input
+              type="text"
+              inputMode="numeric"
+              placeholder="e.g. 12345678"
+              value={idNumber}
+              onChange={(e) => setIdNumber(e.target.value)}
+              className="w-full px-4 py-3 rounded-md border border-border text-sm font-medium text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+            />
+          </div>
+
+          <div className="flex gap-3">
+            <div className="flex-1 flex flex-col gap-1.5">
+              <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">Date of Birth</label>
+              <input
+                type="date"
+                value={dob}
+                onChange={(e) => setDob(e.target.value)}
+                className="w-full px-3 py-3 rounded-md border border-border text-sm text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
+            <div className="flex-1 flex flex-col gap-1.5">
+              <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">Gender</label>
+              <select
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+                className="w-full px-3 py-3 rounded-md border border-border text-sm text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-primary"
+              >
+                <option value="">Select</option>
+                <option>Female</option>
+                <option>Male</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">M-Pesa Phone Number</label>
+            <input
+              type="tel"
+              placeholder="07XX XXX XXX"
+              value={mpesaPhone}
+              onChange={(e) => setMpesaPhone(e.target.value)}
+              className="w-full px-4 py-3 rounded-md border border-border text-sm font-medium text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+            />
+            <p className="text-[11px] text-ink-muted">Must match registered M-Pesa line</p>
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">Profile Photo</label>
+            <button
+              type="button"
+              onClick={() => setPhotoUploaded(true)}
+              className={`w-full py-4 rounded-md border-2 border-dashed text-sm font-medium transition-colors ${
+                photoUploaded
+                  ? "border-status-paid-text bg-status-paid-bg text-status-paid-text"
+                  : "border-border bg-surface text-ink-muted hover:border-primary hover:text-primary"
+              }`}
+            >
+              {photoUploaded ? "Photo uploaded" : "Tap to take photo or choose from gallery"}
+            </button>
+            <p className="text-[11px] text-ink-muted">Stored securely — no automated face matching.</p>
+          </div>
+
+          <div className="mt-2">
+            <button
+              type="submit"
+              disabled={!isValid}
+              className={`w-full py-3.5 rounded-md font-semibold text-sm transition-all ${
+                !isValid ? "bg-border text-ink-muted cursor-not-allowed" : "bg-primary text-white hover:bg-primary-hover"
+              }`}
+            >
+              Continue
+            </button>
+          </div>
+        </form>
+      </div>
+    </CustomerAuthFrame>
+  );
+}
