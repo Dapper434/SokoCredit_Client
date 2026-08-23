@@ -217,3 +217,62 @@ export default function RegisterStep2() {
               </div>
             </div>
           </div>
+          <div className="border-t border-border-dim pt-6 mb-6">
+            <h2 className="text-sm font-semibold text-ink mb-3 uppercase tracking-wide">
+              Primary Markets Covered
+            </h2>
+            <div className="flex flex-wrap gap-2 mb-6">
+              {MARKET_OPTIONS.map((market) => {
+                const isSelected = form.markets_covered.includes(market);
+                return (
+                  <button
+                    key={market}
+                    type="button"
+                    onClick={() => toggleMarket(market)}
+                    className={`px-4 py-2 text-sm border rounded-md transition-colors cursor-pointer ${
+                      isSelected
+                        ? "border-primary bg-primary/10 text-primary font-medium"
+                        : "border-border text-ink hover:border-border-dim"
+                    }`}
+                  >
+                    {market}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="border-t border-border-dim pt-6 mb-8">
+            <h2 className="text-sm font-semibold text-ink mb-4 uppercase tracking-wide">
+              Statutory Document Uploads
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className="w-full border border-dashed border-border-dim rounded-md px-4 py-4 flex items-center justify-center bg-surface cursor-pointer hover:bg-ground transition-colors">
+                <span className="text-sm font-medium text-ink-dim text-center">Certificate of Incorporation / BRS Extract</span>
+              </div>
+              <div className="w-full border border-dashed border-border-dim rounded-md px-4 py-4 flex items-center justify-center bg-surface cursor-pointer hover:bg-ground transition-colors">
+                <span className="text-sm font-medium text-ink-dim text-center">KRA Tax Compliance Certificate</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Final Submit Button */}
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              disabled={!isValid}
+              className={`px-6 py-3 rounded-md font-semibold transition-all duration-200
+                ${
+                  isValid
+                    ? "bg-surface hover:bg-ground text-ink border border-border cursor-pointer shadow-sm"
+                    : "bg-ground-dim text-ink-muted cursor-not-allowed border border-transparent"
+                }`}
+            >
+              Continue to Settlement & Rates
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
