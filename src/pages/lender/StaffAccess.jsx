@@ -44,3 +44,15 @@ export default function StaffAccess() {
     <div className="p-6 flex flex-col gap-6 max-w-[1100px]">
       {/* Header metrics */}
       <div className="grid grid-cols-4 gap-3"></div>
+      {[
+          { label: "Total Active Staff", value: activeCount },
+          { label: "Branch Managers", value: bmCount },
+          { label: "Field Loan Officers", value: loCount },
+          { label: "Covered Market Clusters", value: marketCount },
+        ].map(({ label, value }) => (
+          <div key={label} className="bg-surface border border-border rounded p-4">
+            <p className="text-[10px] font-semibold text-ink-muted uppercase tracking-wider mb-2">{label}</p>
+            <p className="text-2xl font-bold font-mono text-ink">{value}</p>
+          </div>
+        ))}
+      </div>
