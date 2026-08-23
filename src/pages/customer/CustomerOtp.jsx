@@ -6,3 +6,7 @@ export default function CustomerOtp() {
   const navigate = useNavigate();
   const location = useLocation();
   const phone = location.state?.phone || "07XX XXX XXX";
+
+  const handleVerify = () => {
+    navigate("/customer/onboarding/1");
+  };
