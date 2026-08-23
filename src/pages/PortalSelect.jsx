@@ -37,12 +37,14 @@ export default function PortalSelect() {
       <div className="w-full max-w-lg flex flex-col gap-3">
         
         {/* 1. Customer Portal (Currently disabled as it's a future feature) */}
-        <button
-          disabled
-          className="group w-full flex items-center justify-between px-6 py-5 rounded-xl
-                     bg-white/8 border border-white/15 text-left
-                     opacity-60 cursor-not-allowed transition-all duration-200"
-        >
+        {/* 1. Customer Portal — routes to sign in */}
+          <button
+            onClick={() => navigate("/customer/signin")}
+            className="group w-full flex items-center justify-between px-6 py-5 rounded-xl
+             bg-white/8 border border-white/15 text-left
+             hover:bg-white/12 hover:border-white/25
+             cursor-pointer transition-all duration-200"
+          >
           <div>
             <p className="text-white font-semibold text-base">
               Customer Portal
@@ -52,7 +54,7 @@ export default function PortalSelect() {
             </p>
           </div>
           {/* Mobile indicator tag */}
-          <div className="flex items-center gap-2 text-white/40">
+          <div className="flex items-center gap-2 text-white/50 group-hover:text-white/70 transition-colors">
             <span className="text-xs border border-white/20 rounded px-2 py-0.5 font-mono">
               Mobile-first
             </span>
