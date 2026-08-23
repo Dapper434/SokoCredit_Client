@@ -163,3 +163,11 @@ export default function StaffAccess() {
                     setChangeNewValue("");
                     setChangeReason("");
                   }}
+                   className="text-[10px] font-semibold text-primary border border-status-paid-border bg-status-paid-bg px-2 py-1 rounded hover:opacity-80 transition-opacity whitespace-nowrap ml-3"
+                >
+                  Request Change
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
