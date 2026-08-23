@@ -90,3 +90,19 @@ export default function StaffAccess() {
                       className={`w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold text-white flex-shrink-0 ${
                         s.role === "branch_manager" ? "bg-primary" : "bg-ink-dim"
                       }`}
+                          >
+                      {s.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold text-ink">{s.name}</p>
+                      <p className="text-[10px] text-ink-muted font-mono">{s.email}</p>
+                    </div>
+                  </div>
+                </td>
+                <td className="px-4 py-3">
+                  <span
+                    className={`text-[10px] font-mono font-semibold px-2 py-0.5 rounded border ${
+                      s.role === "branch_manager"
+                        ? "bg-primary-light text-primary border-status-paid-border"
+                        : "bg-ground-dim text-ink-dim border-border"
+                    }`}
