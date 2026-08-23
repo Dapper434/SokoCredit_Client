@@ -56,3 +56,7 @@ export default function StaffAccess() {
           </div>
         ))}
       </div>
+
+       {/* Staff roster */}
+      <div className="bg-surface border border-border rounded overflow-hidden">
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-border bg-ground"></div>
