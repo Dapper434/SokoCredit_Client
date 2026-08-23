@@ -17,3 +17,9 @@ const CHANGE_STATUS_LABELS = {
 export default function StaffAccess() {
   const [showInvite, setShowInvite] = useState(false);
   const [showChangeReq, setShowChangeReq] = useState(null);
+
+  const [inviteName, setInviteName] = useState("");
+  const [inviteEmail, setInviteEmail] = useState("");
+  const [invitePhone, setInvitePhone] = useState("");
+  const [inviteRole, setInviteRole] = useState("loan_officer");
+  const [inviteMarkets, setInviteMarkets] = useState([]);
