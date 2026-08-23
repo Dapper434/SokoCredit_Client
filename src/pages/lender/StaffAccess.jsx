@@ -106,3 +106,10 @@ export default function StaffAccess() {
                         ? "bg-primary-light text-primary border-status-paid-border"
                         : "bg-ground-dim text-ink-dim border-border"
                     }`}
+                     >
+                    {s.role === "branch_manager" ? "Branch Manager" : "Loan Officer"}
+                  </span>
+                </td>
+                <td className="px-4 py-3 text-xs text-ink-dim font-mono">{s.markets.join(", ")}</td>
+                <td className="px-4 py-3 text-sm font-mono font-semibold text-ink">{s.borrowers > 0 ? s.borrowers : "—"}</td>
+                <td className="px-4 py-3 text-xs text-ink-muted font-mono">{s.lastActive}</td>
