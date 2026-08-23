@@ -23,3 +23,10 @@ export default function StaffAccess() {
   const [invitePhone, setInvitePhone] = useState("");
   const [inviteRole, setInviteRole] = useState("loan_officer");
   const [inviteMarkets, setInviteMarkets] = useState([]);
+
+  const [changeNewValue, setChangeNewValue] = useState("");
+  const [changeReason, setChangeReason] = useState("");
+
+  const toggleInviteMarket = (m) => {
+    setInviteMarkets((prev) => (prev.includes(m) ? prev.filter((x) => x !== m) : [...prev, m]));
+  };
