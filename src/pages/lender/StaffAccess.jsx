@@ -43,7 +43,7 @@ export default function StaffAccess() {
   return (
     <div className="p-6 flex flex-col gap-6 max-w-[1100px]">
       {/* Header metrics */}
-      <div className="grid grid-cols-4 gap-3"></div>
+      <div className="grid grid-cols-4 gap-3">
       {[
           { label: "Total Active Staff", value: activeCount },
           { label: "Branch Managers", value: bmCount },
@@ -57,21 +57,21 @@ export default function StaffAccess() {
         ))}
       </div>
 
-       {/* Staff roster */}
+      {/* Staff roster */}
       <div className="bg-surface border border-border rounded overflow-hidden">
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-border bg-ground"></div>
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-border bg-ground">
           <h2 className="text-sm font-bold text-ink">Staff Roster</h2>
           <button
             onClick={() => setShowInvite(true)}
             className="flex items-center gap-2 px-3 py-1.5 rounded bg-primary text-white text-xs font-semibold hover:bg-primary-hover transition-colors"
-          ></button>
+          >
             <svg viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5">
               <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
             </svg>
             Add Staff Member
           </button>
         </div>
-         <table className="w-full">
+        <table className="w-full">
           <thead>
             <tr className="bg-ground">
               {["Staff Member", "Role", "Assigned Markets", "Assigned Borrowers", "Last Active", "Status", "Actions"].map((h) => (
@@ -114,7 +114,7 @@ export default function StaffAccess() {
                 <td className="px-4 py-3 text-sm font-mono font-semibold text-ink">{s.borrowers > 0 ? s.borrowers : "—"}</td>
                 <td className="px-4 py-3 text-xs text-ink-muted font-mono">{s.lastActive}</td>
                   <td className="px-4 py-3">
-                  <span className={text-[10px] font-mono font-semibold px-2 py-0.5 rounded border ${STAFF_STATUS_STYLES[s.status]}}>
+                  <span className={`text-[10px] font-mono font-semibold px-2 py-0.5 rounded border ${STAFF_STATUS_STYLES[s.status]}`}>
                     {s.status.charAt(0).toUpperCase() + s.status.slice(1)}
                   </span>
                 </td>
@@ -123,4 +123,28 @@ export default function StaffAccess() {
                     {s.status === "invited" ? (
                       <button className="text-[10px] font-mono text-status-due-text hover:underline">Resend invite</button>
                     ) : (
-                      <></>
+                      <>
+                        <button className="text-[10px] font-mono text-ink-dim border border-border px-2 py-0.5 rounded hover:bg-ground">
+                          Edit
+                        </button>
+                        <button className="text-[10px] font-mono text-status-overdue-text hover:underline">
+                          {s.status === "active" ? "Deactivate" : "Reactivate"}
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Settings & Change Requests */}
+      <div className="bg-surface border border-border rounded overflow-hidden">
+        <div className="px-5 py-3.5 border-b border-border bg-ground">
+          <h2 className="text-sm font-bold text-ink">Settings & Change Requests</h2>
+          <p className="text-[11px] text-ink-muted mt-0.5">
+            Settlement and rate fields cannot be edited directly — changes route through SokoCredit compliance review.
+          </p>
+        </div>
