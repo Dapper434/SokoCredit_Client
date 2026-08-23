@@ -213,4 +213,7 @@ export default function StaffAccess() {
                 </svg>
               </button>
             </div>
+              <div className="grid grid-cols-2 gap-3">
+              <div className="flex flex-col gap-1.5">
+                <label className="text-[10px] font-semibold text-ink-muted uppercase tracking-wider">Full Name</label>
                
