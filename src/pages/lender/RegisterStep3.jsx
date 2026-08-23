@@ -9,8 +9,8 @@ export default function RegisterStep3() {
   const combinedData = location.state?.combinedData || {};
 
   const [form, setForm] = useState({
-    disbursement_account: "",
-    collection_paybill_number: "",
+    mpesa_paybill: "",
+    airtel_money_till: "",
     default_interest_rate: "",
     default_penalty_rate: "",
     admin_full_name: "",
@@ -27,9 +27,9 @@ export default function RegisterStep3() {
   };
 
   const isValid =
-    step1Data.registered_business_name?.trim() &&
-    form.disbursement_account.trim() &&
-    form.collection_paybill_number.trim() &&
+    combinedData.registered_business_name?.trim() &&
+    form.mpesa_paybill.trim() &&
+    form.airtel_money_till.trim() &&
     form.default_interest_rate.trim() &&
     form.default_penalty_rate.trim() &&
     form.admin_full_name.trim() &&
@@ -100,39 +100,44 @@ export default function RegisterStep3() {
           onSubmit={handleSubmit}
           className="bg-surface border border-border-dim rounded-lg p-6 md:p-8"
         >
-          {/* Row 1: Disbursement Bank Account + Collection Paybill */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
-            <div>
-              <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
-                Disbursement Bank Account
-              </label>
-              <input
-                type="text"
-                name="disbursement_account"
-                value={form.disbursement_account}
-                onChange={handleChange}
-                placeholder="e.g. 1234567890 — Equity Bank"
-                className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
-                           placeholder:text-ink-muted/50
-                           focus:outline-none focus:border-primary transition-colors"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
-                M-Pesa Paybill / Till Number
-              </label>
-              <input
-                type="text"
-                name="collection_paybill_number"
-                value={form.collection_paybill_number}
-                onChange={handleChange}
-                placeholder="e.g. 123456"
-                className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
-                           placeholder:text-ink-muted/50
-                           focus:outline-none focus:border-primary transition-colors"
-                required
-              />
+          {/* Row 1: Mobile Money Collections & Disbursements */}
+          <div className="mb-5 border-b border-border-dim pb-6">
+            <h2 className="text-xs font-semibold text-accent uppercase tracking-wide mb-3">
+              Mobile Money Collections & Disbursements
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label className="block text-[10px] font-semibold text-ink-dim uppercase tracking-wide mb-2">
+                  M-Pesa Paybill / Till
+                </label>
+                <input
+                  type="text"
+                  name="mpesa_paybill"
+                  value={form.mpesa_paybill}
+                  onChange={handleChange}
+                  placeholder="e.g. 123456"
+                  className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
+                             placeholder:text-ink-muted/50
+                             focus:outline-none focus:border-primary transition-colors"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-[10px] font-semibold text-ink-dim uppercase tracking-wide mb-2">
+                  Airtel Money Till / Paybill
+                </label>
+                <input
+                  type="text"
+                  name="airtel_money_till"
+                  value={form.airtel_money_till}
+                  onChange={handleChange}
+                  placeholder="e.g. 123456"
+                  className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
+                             placeholder:text-ink-muted/50
+                             focus:outline-none focus:border-primary transition-colors"
+                  required
+                />
+              </div>
             </div>
           </div>
 
