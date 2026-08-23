@@ -292,3 +292,8 @@ export default function StaffAccess() {
               <div>
                 <p className="text-[10px] font-semibold text-ink-muted uppercase tracking-wider mb-1">Current Value</p>
                 <p className="text-sm font-mono text-ink-dim">{fieldForChange.current}</p>
+                   </div>
+              <div className="flex flex-col gap-1.5">
+                <label className="text-[10px] font-semibold text-ink-muted uppercase tracking-wider">Requested New Value</label>
+                <input type="text" value={changeNewValue} onChange={(e) => setChangeNewValue(e.target.value)} placeholder="Enter new value" className="px-3 py-2 rounded border border-border text-sm font-mono bg-surface focus:outline-none focus:ring-2 focus:ring-primary" />
+              </div>
