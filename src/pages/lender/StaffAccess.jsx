@@ -271,3 +271,16 @@ export default function StaffAccess() {
           </div>
         </div>
       )}
+      
+       {/* Change request modal */}
+      {showChangeReq && fieldForChange && (
+        <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-6" onClick={() => setShowChangeReq(null)}>
+          <div className="bg-surface rounded border border-border w-full max-w-sm p-5 flex flex-col gap-4" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-bold text-ink">Request Change</h3>
+              <button onClick={() => setShowChangeReq(null)} className="text-ink-muted hover:text-ink">
+                <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+                  <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </button>
+            </div>
