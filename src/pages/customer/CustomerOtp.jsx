@@ -29,3 +29,9 @@ export default function CustomerOtp() {
         </div>
        <div className="flex-1 bg-ground rounded-t-[20px] -mt-4 px-6 pt-8 pb-6 flex flex-col gap-8">
           <OtpInput length={6} onComplete={() => {}} />
+                <button
+            onClick={handleVerify}
+            className="w-full py-3.5 rounded-md font-semibold text-sm bg-primary text-white hover:bg-primary-hover active:scale-[0.99] transition-all"
+          >
+            Verify Code
+          </button>
