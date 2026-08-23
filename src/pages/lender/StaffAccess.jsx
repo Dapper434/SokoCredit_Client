@@ -30,3 +30,8 @@ export default function StaffAccess() {
   const toggleInviteMarket = (m) => {
     setInviteMarkets((prev) => (prev.includes(m) ? prev.filter((x) => x !== m) : [...prev, m]));
   };
+
+  const activeCount = staffRoster.filter((s) => s.status === "active").length;
+  const bmCount = staffRoster.filter((s) => s.role === "branch_manager").length;
+  const loCount = staffRoster.filter((s) => s.role === "loan_officer").length;
+  const marketCount = [...new Set(staffRoster.flatMap((s) => s.markets).filter((m) => m !== "All"))].length;
