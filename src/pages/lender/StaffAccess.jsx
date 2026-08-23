@@ -13,3 +13,7 @@ const CHANGE_STATUS_LABELS = {
   approved: "Approved",
   rejected: "Rejected",
 };
+
+export default function StaffAccess() {
+  const [showInvite, setShowInvite] = useState(false);
+  const [showChangeReq, setShowChangeReq] = useState(null);
