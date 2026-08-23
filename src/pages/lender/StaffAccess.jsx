@@ -79,3 +79,14 @@ export default function StaffAccess() {
                   {h}
                 </th>
               ))}
+                 </tr>
+          </thead>
+          <tbody>
+            {staffRoster.map((s) => (
+              <tr key={s.id} className="border-t border-border-dim hover:bg-ground transition-colors">
+                <td className="px-4 py-3">
+                  <div className="flex items-center gap-2.5">
+                    <div
+                      className={`w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold text-white flex-shrink-0 ${
+                        s.role === "branch_manager" ? "bg-primary" : "bg-ink-dim"
+                      }`}
