@@ -17,7 +17,8 @@ export default function RegisterStep1() {
     registered_business_name: "",
     registration_number: "",
     kra_pin: "",
-    operating_license_type: "",
+    license_category: "",
+    cbk_license_number: "",
     head_office_address: "",
   });
 
@@ -30,19 +31,22 @@ export default function RegisterStep1() {
   const isValid =
     form.registered_business_name.trim() &&
     form.registration_number.trim() &&
-    form.kra_pin.trim();
+    form.kra_pin.trim() &&
+    form.license_category.trim() &&
+    form.cbk_license_number.trim() &&
+    form.head_office_address.trim();
 
   // Proceed to Step 2, passing the current form data via React Router state
   const handleContinue = (e) => {
     e.preventDefault();
     if (!isValid) return;
-    navigate("/lender/register/settlement", { state: { step1: form } });
+    navigate("/lender/register/compliance", { state: { step1: form } });
   };
 
   return (
     // Main container using our light ground color
     <div className="min-h-screen bg-ground px-4 py-8">
-      <div className="w-full max-w-2xl mx-auto">
+      <div className="w-full max-w-3xl mx-auto">
         
         {/* Navigation back to sign in */}
         <button
@@ -54,15 +58,17 @@ export default function RegisterStep1() {
 
         {/* Breadcrumb step indicator */}
         <div className="flex items-center gap-2 mb-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-primary inline-block" />
-          <span className="text-xs tracking-[0.15em] text-ink-muted uppercase font-medium">
-            Step 1 of 2 — Business Identity
+          <span className="w-8 h-1 rounded-full bg-primary inline-block" />
+          <span className="w-8 h-1 rounded-full bg-ground-dim inline-block" />
+          <span className="w-8 h-1 rounded-full bg-ground-dim inline-block" />
+          <span className="text-xs tracking-[0.15em] text-ink-muted uppercase font-medium ml-2">
+            Step 1 of 3
           </span>
         </div>
 
         {/* Page Title */}
         <h1 className="text-2xl font-bold text-ink mb-6">
-          Register your Institution
+          Business Identity & Physical Presence
         </h1>
 
         {/* The main registration form card */}
@@ -81,7 +87,7 @@ export default function RegisterStep1() {
                 name="registered_business_name"
                 value={form.registered_business_name}
                 onChange={handleChange}
-                placeholder="e.g. Jua Sunny Ltd"
+                placeholder="e.g. Jua Microfinance Ltd"
                 className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
                            placeholder:text-ink-muted/50
                            focus:outline-none focus:border-primary transition-colors"
@@ -90,14 +96,14 @@ export default function RegisterStep1() {
             </div>
             <div>
               <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
-                BRS Registration Number
+                BRS Registration / Certificate No.
               </label>
               <input
                 type="text"
                 name="registration_number"
                 value={form.registration_number}
                 onChange={handleChange}
-                placeholder="PVT-008080"
+                placeholder="e.g. PVT-123456"
                 className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
                            placeholder:text-ink-muted/50
                            focus:outline-none focus:border-primary transition-colors"
@@ -110,14 +116,14 @@ export default function RegisterStep1() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
             <div>
               <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
-                KRA PIN
+                Company KRA PIN
               </label>
               <input
                 type="text"
                 name="kra_pin"
                 value={form.kra_pin}
                 onChange={handleChange}
-                placeholder="P0808"
+                placeholder="e.g. P051234567M"
                 className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
                            placeholder:text-ink-muted/50
                            focus:outline-none focus:border-primary transition-colors"
@@ -126,18 +132,19 @@ export default function RegisterStep1() {
             </div>
             <div>
               <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
-                License Type
+                License Category
               </label>
               <div className="relative">
                 <select
-                  name="operating_license_type"
-                  value={form.operating_license_type}
+                  name="license_category"
+                  value={form.license_category}
                   onChange={handleChange}
-                  className="w-full border border-border rounded-md px-4 py-3 text-ink bg-surface
-                             appearance-none cursor-pointer
-                             focus:outline-none focus:border-primary transition-colors"
+                  className="w-full border-2 border-primary rounded-md px-4 py-3 text-ink bg-surface
+                             appearance-none cursor-pointer font-medium
+                             focus:outline-none focus:border-primary-hover transition-colors"
+                  required
                 >
-                  <option value="">Select type</option>
+                  <option value="" disabled>Select type</option>
                   {LICENSE_TYPES.map((type) => (
                     <option key={type} value={type}>
                       {type}
@@ -147,7 +154,7 @@ export default function RegisterStep1() {
                 {/* Custom dropdown arrow icon */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-muted pointer-events-none"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-ink pointer-events-none"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -156,6 +163,37 @@ export default function RegisterStep1() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                 </svg>
               </div>
+            </div>
+          </div>
+
+          {/* Row 3: CBK Digital Credit Provider License No. + Certificate Upload */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5 p-5 bg-ground/30 rounded-lg border border-border-dim">
+            <div>
+              <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
+                CBK Digital Credit Provider License No.
+              </label>
+              <input
+                type="text"
+                name="cbk_license_number"
+                value={form.cbk_license_number}
+                onChange={handleChange}
+                placeholder="e.g. CBK/DCP/2024/001"
+                className="w-full border border-border rounded-md px-4 py-3 text-ink bg-surface
+                           placeholder:text-ink-muted/50
+                           focus:outline-none focus:border-primary transition-colors mb-1"
+                required
+              />
+              <p className="text-[10px] text-ink-muted leading-relaxed">Enter the number exactly as it appears on the certificate.</p>
+            </div>
+            
+            <div>
+              <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
+                License Certificate Upload
+              </label>
+              <div className="w-full border border-dashed border-border-dim rounded-md px-4 py-3 flex items-center justify-center bg-surface cursor-pointer hover:bg-ground transition-colors mb-1">
+                <span className="text-sm font-medium text-ink-dim">Upload PDF or image</span>
+              </div>
+              <p className="text-[10px] text-ink-muted leading-relaxed">PDF or image. This is required to verify your licence claim.</p>
             </div>
           </div>
 
@@ -173,39 +211,42 @@ export default function RegisterStep1() {
               className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
                          placeholder:text-ink-muted/50
                          focus:outline-none focus:border-primary transition-colors"
+              required
             />
           </div>
 
-          {/* Map placeholder (Visual only for now) */}
-          <div className="border border-border-dim rounded-lg bg-ground/50 flex flex-col items-center justify-center py-10 mb-6">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-8 h-8 text-primary mb-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={1.5}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-            </svg>
-            <p className="text-sm text-ink-dim">Address geocodes to map pin</p>
-            <p className="text-xs text-ink-muted mt-0.5">Google Maps Places API</p>
+          {/* Map placeholder */}
+          <div className="relative border border-border-dim rounded-lg bg-[#F5F5F0] overflow-hidden mb-8 h-32 flex flex-col items-center justify-center">
+            {/* Minimal grid background to look like a map placeholder */}
+            <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'linear-gradient(#ccc 1px, transparent 1px), linear-gradient(90deg, #ccc 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
+            
+            <div className="relative z-10 flex flex-col items-center text-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-6 h-6 text-primary mb-1"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+              </svg>
+              <p className="text-xs font-medium text-ink">Address geocodes to map pin</p>
+              <p className="text-[10px] text-ink-muted mt-0.5">Google Maps Places API</p>
+            </div>
           </div>
 
           {/* Form Submit Button */}
-          <div className="flex justify-center">
+          <div className="flex justify-end">
             <button
               type="submit"
               disabled={!isValid}
-              className={`px-8 py-3 rounded-md font-semibold transition-all duration-200
+              className={`px-6 py-3 rounded-md font-semibold transition-all duration-200
                 ${
                   isValid
-                    ? "bg-primary hover:bg-primary-hover text-white cursor-pointer"
-                    : "bg-ground-dim text-ink-muted cursor-not-allowed"
+                    ? "bg-surface hover:bg-ground text-ink border border-border cursor-pointer shadow-sm"
+                    : "bg-ground-dim text-ink-muted cursor-not-allowed border border-transparent"
                 }`}
             >
-              Continue to Settlement Details
+              Continue to Compliance Details
             </button>
           </div>
         </form>
