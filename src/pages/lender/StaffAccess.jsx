@@ -7,3 +7,9 @@ const STAFF_STATUS_STYLES = {
   inactive: "bg-status-overdue-bg text-status-overdue-text border-status-overdue-border",
   invited: "bg-status-due-bg text-status-due-text border-status-due-border",
 };
+
+const CHANGE_STATUS_LABELS = {
+  pending: "Pending SokoCredit Review",
+  approved: "Approved",
+  rejected: "Rejected",
+};
