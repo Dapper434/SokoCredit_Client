@@ -39,3 +39,8 @@ export default function StaffAccess() {
   const fieldForChange = changeableFields.find((f) => f.key === showChangeReq);
   const inviteValid = inviteName && inviteEmail && !(inviteRole === "loan_officer" && inviteMarkets.length === 0);
   const changeValid = changeNewValue && changeReason;
+
+  return (
+    <div className="p-6 flex flex-col gap-6 max-w-[1100px]">
+      {/* Header metrics */}
+      <div className="grid grid-cols-4 gap-3"></div>
