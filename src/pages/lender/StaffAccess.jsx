@@ -188,3 +188,15 @@ export default function StaffAccess() {
                 <tr key={cr.id} className="border-t border-border-dim">
                   <td className="py-3 pr-4 text-xs font-semibold text-ink">{cr.field}</td>
                   <td className="py-3 pr-4 text-xs font-mono text-ink-muted line-through">{cr.oldValue}</td>
+                   <td className="py-3 pr-4 text-xs font-mono font-semibold text-ink">{cr.newValue}</td>
+                  <td className="py-3 pr-4">
+                    <StatusBadge status={cr.status === "approved" ? "paid" : cr.status === "rejected" ? "overdue" : "pending"} className="whitespace-nowrap" />
+                  </td>
+                  <td className="py-3 pr-4 text-[11px] font-mono text-ink-muted">{cr.date}</td>
+                  <td className="py-3 text-[11px] text-ink-dim max-w-[200px] truncate">{cr.reason}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
