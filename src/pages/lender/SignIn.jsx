@@ -7,6 +7,9 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  // Backend doesn't return a staff role yet, so this toggle lets us
+  // demo both RBAC views until real role data comes from login.
+  const [selectedRole, setSelectedRole] = useState("branch_manager");
 
   const navigate = useNavigate();
 
@@ -21,7 +24,9 @@ export default function SignIn() {
 
     try {
       const data = await login(email.trim(), password);
-      saveSession(data);
+      // Merge the manually-selected role in until the backend returns
+      // its own role field — real data always wins if present.
+      saveSession({ role: selectedRole, ...data });
       navigate("/lender/mfa");
     } catch (err) {
       setError(err.message);
@@ -32,10 +37,9 @@ export default function SignIn() {
 
   return (
     // Main full-height container with a light background
-    <div className="min-h-screen bg-ground flex flex-col px-4 pt-6">
-      
+    <div className="min-h-screen bg-ground flex flex-col px-4 py-6">
       {/* Back navigation link positioned at the top left */}
-      <div className="w-full max-w-md mx-auto">
+      <div className="w-full max-w-md mx-auto mb-10">
         <button
           onClick={() => navigate("/")}
           className="text-ink-muted text-sm flex items-center gap-1.5 hover:text-ink transition-colors cursor-pointer"
@@ -45,14 +49,40 @@ export default function SignIn() {
       </div>
 
       {/* Container for the page content, allowing us to center it */}
-      <div className="flex-1 flex flex-col items-center justify-center -mt-16">
+      <div className="flex-1 flex flex-col items-center justify-start">
         <div className="w-full max-w-md">
           {/* Header section with brand text and page title */}
           <p className="text-xs tracking-[0.2em] text-accent uppercase font-semibold mb-2">
             SokoCredit
           </p>
           <h1 className="text-3xl font-bold text-ink mb-1">Lender Portal</h1>
-          <p className="text-ink-muted text-sm mb-8">Staff sign-in</p>
+          <p className="text-ink-muted text-sm mb-6">Staff sign-in</p>
+
+          {/* Role toggle — Branch Manager vs Loan Officer */}
+          <div className="flex rounded-md border border-border overflow-hidden mb-6">
+            <button
+              type="button"
+              onClick={() => setSelectedRole("branch_manager")}
+              className={`flex-1 py-2.5 text-sm font-semibold transition-colors ${
+                selectedRole === "branch_manager"
+                  ? "bg-ink text-white"
+                  : "bg-surface text-ink-dim hover:bg-ground"
+              }`}
+            >
+              Branch Manager
+            </button>
+            <button
+              type="button"
+              onClick={() => setSelectedRole("loan_officer")}
+              className={`flex-1 py-2.5 text-sm font-semibold border-l border-border transition-colors ${
+                selectedRole === "loan_officer"
+                  ? "bg-ink text-white"
+                  : "bg-surface text-ink-dim hover:bg-ground"
+              }`}
+            >
+              Loan Officer
+            </button>
+          </div>
 
           {/* Authentication Form Card */}
           <form
@@ -61,13 +91,13 @@ export default function SignIn() {
           >
             {/* Email Input Field */}
             <label className="block text-xs font-semibold text-ink-dim uppercase tracking-wide mb-2">
-              Email Address
+              Work Email
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="staff@institution.co.ke"
+              placeholder="manager@institution.co.ke"
               className="w-full border border-border rounded-md px-4 py-3 mb-5 text-ink
                          placeholder:text-ink-muted/50 bg-transparent
                          focus:outline-none focus:border-primary transition-colors"
@@ -105,8 +135,12 @@ export default function SignIn() {
                     : "bg-ground-dim text-ink-muted cursor-not-allowed"
                 }`}
             >
-              {submitting ? "Signing in…" : "Continue to Verification"}
+              {submitting ? "Signing in…" : "Continue to Verification (MFA)"}
             </button>
+
+            <p className="text-center text-xs text-ink-muted mt-4">
+              Staff accounts are provisioned internally by your institution admin.
+            </p>
           </form>
 
           {/* Registration link below the form for new institutions */}
@@ -121,7 +155,6 @@ export default function SignIn() {
           </p>
         </div>
       </div>
-      
     </div>
   );
 }
