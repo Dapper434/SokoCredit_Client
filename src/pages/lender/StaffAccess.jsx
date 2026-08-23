@@ -148,3 +148,11 @@ export default function StaffAccess() {
             Settlement and rate fields cannot be edited directly — changes route through SokoCredit compliance review.
           </p>
         </div>
+          <div className="px-5 py-4 border-b border-border">
+          <p className="text-[10px] font-semibold text-ink-muted uppercase tracking-widest mb-3">Current Configuration</p>
+          <div className="grid grid-cols-2 gap-3">
+            {changeableFields.map(({ key, label, current }) => (
+              <div key={key} className="flex items-center justify-between py-2.5 px-3 rounded bg-ground border border-border">
+                <div>
+                  <p className="text-[10px] text-ink-muted font-semibold uppercase tracking-wide">{label}</p>
+                  <p className="text-sm font-mono font-semibold text-ink mt-0.5">{current}</p>
