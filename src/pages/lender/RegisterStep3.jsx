@@ -14,6 +14,7 @@ export default function RegisterStep3() {
     default_interest_rate: "",
     default_penalty_rate: "",
     admin_password: "",
+    confirmed: false,
   });
 
   // Loading and error states for the API submission
@@ -21,7 +22,8 @@ export default function RegisterStep3() {
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
+    setForm((prev) => ({ ...prev, [e.target.name]: value }));
   };
 
   const isValid =
@@ -30,7 +32,8 @@ export default function RegisterStep3() {
     form.airtel_money_till.trim() &&
     form.default_interest_rate.trim() &&
     form.default_penalty_rate.trim() &&
-    form.admin_password.length >= 8;
+    form.admin_password.length >= 8 &&
+    form.confirmed;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -201,15 +204,30 @@ export default function RegisterStep3() {
           </div>
 
           {/* Compliance notice */}
-          <div className="border border-primary/30 bg-compliance-bg rounded-lg px-5 py-4 mb-6">
-            <p className="text-sm font-semibold text-primary mb-1">
+          <div className="border border-status-active-border bg-status-active-bg rounded-lg px-5 py-4 mb-6">
+            <p className="text-sm font-semibold text-status-active-text mb-1">
               Platform Compliance Review
             </p>
-            <p className="text-xs text-ink-dim leading-relaxed">
-              Your submission enters a platform-level compliance queue. The first
-              Super Admin account activates once approved. This review is
-              independent from your institution's internal Maker-Checker desk.
+            <p className="text-xs text-status-active-text/80 leading-relaxed">
+              Your submission creates a Compliance Dossier for SokoCredit's internal audit team. Account activation requires
+              physical verification, document validation, and execution of a Service Level Agreement. This process is independent
+              from your institution's internal Maker-Checker desk.
             </p>
+          </div>
+
+          {/* Confirmation Checkbox */}
+          <div className="mb-8 flex items-start gap-3">
+            <input
+              type="checkbox"
+              name="confirmed"
+              id="confirmed"
+              checked={form.confirmed}
+              onChange={handleChange}
+              className="mt-1 w-4 h-4 text-primary bg-surface border-border rounded focus:ring-primary focus:ring-2 cursor-pointer"
+            />
+            <label htmlFor="confirmed" className="text-sm text-ink-dim cursor-pointer leading-relaxed select-none">
+              I confirm that this institution operates legally in Kenya. I understand that account activation requires physical verification, document validation, and execution of a SokoCredit Service Level Agreement.
+            </label>
           </div>
 
           {/* Error message display */}
@@ -227,11 +245,11 @@ export default function RegisterStep3() {
               className={`px-8 py-3 rounded-md font-semibold transition-all duration-200
                 ${
                   isValid && !submitting
-                    ? "bg-primary hover:bg-primary-hover text-white cursor-pointer"
+                    ? "bg-[#D6D1C4] hover:bg-[#C5C0B3] text-ink cursor-pointer"
                     : "bg-ground-dim text-ink-muted cursor-not-allowed"
                 }`}
             >
-              {submitting ? "Submitting…" : "Submit for Review"}
+              {submitting ? "Submitting…" : "Submit Application for Compliance Review"}
             </button>
           </div>
         </form>
