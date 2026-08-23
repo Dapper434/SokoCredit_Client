@@ -271,7 +271,7 @@ export default function StaffAccess() {
           </div>
         </div>
       )}
-      
+
        {/* Change request modal */}
       {showChangeReq && fieldForChange && (
         <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-6" onClick={() => setShowChangeReq(null)}>
@@ -284,3 +284,11 @@ export default function StaffAccess() {
                 </svg>
               </button>
             </div>
+             <div className="flex flex-col gap-3">
+              <div>
+                <p className="text-[10px] font-semibold text-ink-muted uppercase tracking-wider mb-1">Field</p>
+                <p className="text-sm font-semibold text-ink">{fieldForChange.label}</p>
+              </div>
+              <div>
+                <p className="text-[10px] font-semibold text-ink-muted uppercase tracking-wider mb-1">Current Value</p>
+                <p className="text-sm font-mono text-ink-dim">{fieldForChange.current}</p>
