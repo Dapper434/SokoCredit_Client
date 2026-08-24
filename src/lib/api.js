@@ -49,7 +49,7 @@ export function login(email, password) {
 }
 
 export function signupOrganization(payload) {
-  return apiRequest("/api/auth/organizations", {
+  return apiRequest("/api/auth/institutions", {
     method: "POST",
     body: JSON.stringify(payload),
   });

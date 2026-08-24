@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { saveSession, signupOrganization, toOrganizationSlug } from "../../lib/api";
+import { saveSession, signupOrganization } from "../../lib/api";
 
 export default function RegisterStep3() {
   const navigate = useNavigate();
@@ -42,17 +42,35 @@ export default function RegisterStep3() {
     setSubmitting(true);
     setError("");
 
-    const businessName = combinedData.registered_business_name || "Unknown Business";
-    const regNumber = combinedData.registration_number || "";
-    const email = combinedData.official_work_email || "admin@example.com";
-    const fullName = combinedData.director_full_name || "Admin User";
+    const staffParsed = combinedData.estimated_staff
+      ? parseInt(String(combinedData.estimated_staff), 10)
+      : NaN;
 
     const payload = {
-      name: businessName.trim(),
-      slug: toOrganizationSlug(businessName, regNumber),
-      admin_email: email.trim(),
+      // Step 1 fields (Identity & Physical Presence)
+      registered_business_name: (combinedData.registered_business_name || "").trim(),
+      registration_number: (combinedData.registration_number || "").trim(),
+      kra_pin: (combinedData.kra_pin || "").trim(),
+      operating_license_type: combinedData.license_category || null,
+      cbk_license_number: combinedData.cbk_license_number || null,
+      head_office_address: (combinedData.head_office_address || "").trim(),
+
+      // Step 2 fields (Compliance & Operations)
+      county_business_permit_number: combinedData.county_business_permit || null,
+      odpc_registration_number: combinedData.odpc_registration_number || null,
+      estimated_staff_count: Number.isFinite(staffParsed) ? staffParsed : null,
+      admin_full_name: (combinedData.director_full_name || "").trim(),
+      admin_national_id_number: combinedData.director_national_id || null,
+      admin_email: (combinedData.official_work_email || "").trim(),
       admin_password: form.admin_password,
-      admin_full_name: fullName.trim(),
+
+      // Step 3 fields (Settlement & Rates)
+      collection_paybill_number: form.mpesa_paybill.trim() || null,
+      default_interest_rate: form.default_interest_rate ? parseFloat(form.default_interest_rate) : null,
+      default_penalty_rate: form.default_penalty_rate ? parseFloat(form.default_penalty_rate) : null,
+
+      // Markets from Step 2
+      primary_markets: combinedData.markets_covered || [],
     };
 
     try {
