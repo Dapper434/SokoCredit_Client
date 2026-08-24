@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { saveSession, signupOrganization, toOrganizationSlug } from "../../lib/api";
+import { saveSession, signupOrganization } from "../../lib/api";
 
 export default function RegisterStep3() {
   const navigate = useNavigate();
@@ -13,9 +13,8 @@ export default function RegisterStep3() {
     airtel_money_till: "",
     default_interest_rate: "",
     default_penalty_rate: "",
-    admin_full_name: "",
-    admin_email: "",
     admin_password: "",
+    confirmed: false,
   });
 
   // Loading and error states for the API submission
@@ -23,7 +22,8 @@ export default function RegisterStep3() {
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
+    setForm((prev) => ({ ...prev, [e.target.name]: value }));
   };
 
   const isValid =
@@ -32,9 +32,8 @@ export default function RegisterStep3() {
     form.airtel_money_till.trim() &&
     form.default_interest_rate.trim() &&
     form.default_penalty_rate.trim() &&
-    form.admin_full_name.trim() &&
-    form.admin_email.trim() &&
-    form.admin_password.length >= 8;
+    form.admin_password.length >= 8 &&
+    form.confirmed;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,15 +42,35 @@ export default function RegisterStep3() {
     setSubmitting(true);
     setError("");
 
+    const staffParsed = combinedData.estimated_staff
+      ? parseInt(String(combinedData.estimated_staff), 10)
+      : NaN;
+
     const payload = {
-      name: step1Data.registered_business_name.trim(),
-      slug: toOrganizationSlug(
-        step1Data.registered_business_name,
-        step1Data.registration_number,
-      ),
-      admin_email: form.admin_email.trim(),
+      // Step 1 fields (Identity & Physical Presence)
+      registered_business_name: (combinedData.registered_business_name || "").trim(),
+      registration_number: (combinedData.registration_number || "").trim(),
+      kra_pin: (combinedData.kra_pin || "").trim(),
+      operating_license_type: combinedData.license_category || null,
+      cbk_license_number: combinedData.cbk_license_number || null,
+      head_office_address: (combinedData.head_office_address || "").trim(),
+
+      // Step 2 fields (Compliance & Operations)
+      county_business_permit_number: combinedData.county_business_permit || null,
+      odpc_registration_number: combinedData.odpc_registration_number || null,
+      estimated_staff_count: Number.isFinite(staffParsed) ? staffParsed : null,
+      admin_full_name: (combinedData.director_full_name || "").trim(),
+      admin_national_id_number: combinedData.director_national_id || null,
+      admin_email: (combinedData.official_work_email || "").trim(),
       admin_password: form.admin_password,
-      admin_full_name: form.admin_full_name.trim(),
+
+      // Step 3 fields (Settlement & Rates)
+      collection_paybill_number: form.mpesa_paybill.trim() || null,
+      default_interest_rate: form.default_interest_rate ? parseFloat(form.default_interest_rate) : null,
+      default_penalty_rate: form.default_penalty_rate ? parseFloat(form.default_penalty_rate) : null,
+
+      // Markets from Step 2
+      primary_markets: combinedData.markets_covered || [],
     };
 
     try {
@@ -181,78 +200,52 @@ export default function RegisterStep3() {
             </div>
           </div>
 
-          <div className="border-t border-border-dim pt-6 mb-6">
-            <h2 className="text-sm font-semibold text-ink mb-1">
-              Administrator Account
+          <div className="mb-6 pb-6 border-b border-border-dim">
+            <h2 className="text-xs font-semibold text-accent uppercase tracking-wide mb-2">
+              Administrator Password
             </h2>
-            <p className="text-xs text-ink-dim mb-5">
-              This account becomes your institution&apos;s first admin on SokoCredit.
+            <p className="text-[10px] text-ink-dim mb-3">
+              Set a secure password for your institution's primary director account ({combinedData.official_work_email || "your email"}).
             </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
-              <div>
-                <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  name="admin_full_name"
-                  value={form.admin_full_name}
-                  onChange={handleChange}
-                  placeholder="e.g. Jane Kamau"
-                  className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
-                             placeholder:text-ink-muted/50
-                             focus:outline-none focus:border-primary transition-colors"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
-                  Work Email
-                </label>
-                <input
-                  type="email"
-                  name="admin_email"
-                  value={form.admin_email}
-                  onChange={handleChange}
-                  placeholder="admin@institution.co.ke"
-                  className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
-                             placeholder:text-ink-muted/50
-                             focus:outline-none focus:border-primary transition-colors"
-                  required
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
-                Password
-              </label>
-              <input
-                type="password"
-                name="admin_password"
-                value={form.admin_password}
-                onChange={handleChange}
-                placeholder="Minimum 8 characters"
-                minLength={8}
-                className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
-                           placeholder:text-ink-muted/50
-                           focus:outline-none focus:border-primary transition-colors"
-                required
-              />
-            </div>
+            <input
+              type="password"
+              name="admin_password"
+              value={form.admin_password}
+              onChange={handleChange}
+              placeholder="Minimum 8 characters"
+              minLength={8}
+              className="w-full md:w-1/2 border border-border rounded-md px-4 py-3 text-ink bg-transparent
+                         placeholder:text-ink-muted/50
+                         focus:outline-none focus:border-primary transition-colors"
+              required
+            />
           </div>
 
           {/* Compliance notice */}
-          <div className="border border-primary/30 bg-compliance-bg rounded-lg px-5 py-4 mb-6">
-            <p className="text-sm font-semibold text-primary mb-1">
+          <div className="border border-status-active-border bg-status-active-bg rounded-lg px-5 py-4 mb-6">
+            <p className="text-sm font-semibold text-status-active-text mb-1">
               Platform Compliance Review
             </p>
-            <p className="text-xs text-ink-dim leading-relaxed">
-              Your submission enters a platform-level compliance queue. The first
-              Super Admin account activates once approved. This review is
-              independent from your institution's internal Maker-Checker desk.
+            <p className="text-xs text-status-active-text/80 leading-relaxed">
+              Your submission creates a Compliance Dossier for SokoCredit's internal audit team. Account activation requires
+              physical verification, document validation, and execution of a Service Level Agreement. This process is independent
+              from your institution's internal Maker-Checker desk.
             </p>
+          </div>
+
+          {/* Confirmation Checkbox */}
+          <div className="mb-8 flex items-start gap-3">
+            <input
+              type="checkbox"
+              name="confirmed"
+              id="confirmed"
+              checked={form.confirmed}
+              onChange={handleChange}
+              className="mt-1 w-4 h-4 text-primary bg-surface border-border rounded focus:ring-primary focus:ring-2 cursor-pointer"
+            />
+            <label htmlFor="confirmed" className="text-sm text-ink-dim cursor-pointer leading-relaxed select-none">
+              I confirm that this institution operates legally in Kenya. I understand that account activation requires physical verification, document validation, and execution of a SokoCredit Service Level Agreement.
+            </label>
           </div>
 
           {/* Error message display */}
@@ -270,11 +263,11 @@ export default function RegisterStep3() {
               className={`px-8 py-3 rounded-md font-semibold transition-all duration-200
                 ${
                   isValid && !submitting
-                    ? "bg-primary hover:bg-primary-hover text-white cursor-pointer"
+                    ? "bg-[#D6D1C4] hover:bg-[#C5C0B3] text-ink cursor-pointer"
                     : "bg-ground-dim text-ink-muted cursor-not-allowed"
                 }`}
             >
-              {submitting ? "Submitting…" : "Submit for Review"}
+              {submitting ? "Submitting…" : "Submit Application for Compliance Review"}
             </button>
           </div>
         </form>
