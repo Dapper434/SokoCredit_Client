@@ -23,6 +23,13 @@ export default function SignIn() {
     setError("");
 
     try {
+      const staffList = JSON.parse(localStorage.getItem("soko_staff_roster") || "[]");
+      const staffMember = staffList.find(s => s.email.toLowerCase() === email.trim().toLowerCase());
+      
+      if (staffMember && staffMember.status === "inactive") {
+        throw new Error("Your account has been deactivated. Please contact your administrator.");
+      }
+
       const data = await login(email.trim(), password);
       // Merge the manually-selected role in until the backend returns
       // its own role field — real data always wins if present.
