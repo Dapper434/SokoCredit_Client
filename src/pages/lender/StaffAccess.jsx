@@ -337,18 +337,21 @@ export default function StaffAccess() {
         </div>
          <div className="px-5 py-4">
           <p className="text-[10px] font-semibold text-ink-muted uppercase tracking-widest mb-3">Request History</p>
-          <table className="w-full">
-            <thead>
-              <tr>
-                {["Field", "Current", "Requested", "Status", "Date", "Reason"].map((h) => (
-                  <th key={h} className="text-left text-[10px] font-semibold text-ink-muted uppercase tracking-wider pb-2 pr-4 font-mono">
-                    {h}
-                  </th>
-                ))}
-                  </tr>
-            </thead>
-            <tbody>
-              {changeRequests.map((cr) => (
+          {changeReqs.length === 0 ? (
+            <p className="text-sm text-ink-muted py-4 text-center">No change requests submitted yet.</p>
+          ) : (
+            <table className="w-full">
+              <thead>
+                <tr>
+                  {["Field", "Current", "Requested", "Status", "Date", "Reason"].map((h) => (
+                    <th key={h} className="text-left text-[10px] font-semibold text-ink-muted uppercase tracking-wider pb-2 pr-4 font-mono">
+                      {h}
+                    </th>
+                  ))}
+                    </tr>
+              </thead>
+              <tbody>
+                {changeReqs.map((cr) => (
                 <tr key={cr.id} className="border-t border-border-dim">
                   <td className="py-3 pr-4 text-xs font-semibold text-ink">{cr.field}</td>
                   <td className="py-3 pr-4 text-xs font-mono text-ink-muted line-through">{cr.oldValue}</td>
@@ -358,10 +361,11 @@ export default function StaffAccess() {
                   </td>
                   <td className="py-3 pr-4 text-[11px] font-mono text-ink-muted">{cr.date}</td>
                   <td className="py-3 text-[11px] text-ink-dim max-w-[200px] truncate">{cr.reason}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
 
