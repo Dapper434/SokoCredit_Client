@@ -33,26 +33,46 @@ const CHANGE_STATUS_LABELS = {
 };
 
 export default function StaffAccess() {
-  const [showInvite, setShowInvite] = useState(false);
-  const [showChangeReq, setShowChangeReq] = useState(null);
+  const { toast, ToastContainer } = useToast();
 
+  // ── Staff roster state (persisted to localStorage) ──
+  const [roster, setRoster] = useState(() => loadFromStorage(STAFF_KEY, []));
+  const [showInvite, setShowInvite] = useState(false);
+  const [editingStaff, setEditingStaff] = useState(null); // null = adding, object = editing
+
+  // ── Invite / edit form fields ──
   const [inviteName, setInviteName] = useState("");
   const [inviteEmail, setInviteEmail] = useState("");
   const [invitePhone, setInvitePhone] = useState("");
   const [inviteRole, setInviteRole] = useState("loan_officer");
   const [inviteMarkets, setInviteMarkets] = useState([]);
 
+  // ── Change request state (persisted to localStorage) ──
+  const [changeReqs, setChangeReqs] = useState(() => loadFromStorage(CHANGE_REQ_KEY, []));
+  const [showChangeReq, setShowChangeReq] = useState(null);
   const [changeNewValue, setChangeNewValue] = useState("");
   const [changeReason, setChangeReason] = useState("");
 
+  // Persist roster whenever it changes
+  useEffect(() => {
+    saveToStorage(STAFF_KEY, roster);
+  }, [roster]);
+
+  // Persist change requests whenever they change
+  useEffect(() => {
+    saveToStorage(CHANGE_REQ_KEY, changeReqs);
+  }, [changeReqs]);
+
+  // ── Derived metrics ──
+  const activeCount = roster.filter((s) => s.status === "active").length;
+  const bmCount = roster.filter((s) => s.role === "branch_manager").length;
+  const loCount = roster.filter((s) => s.role === "loan_officer").length;
+  const marketCount = [...new Set(roster.flatMap((s) => s.markets).filter((m) => m !== "All"))].length;
+
+  // ── Form helpers ──
   const toggleInviteMarket = (m) => {
     setInviteMarkets((prev) => (prev.includes(m) ? prev.filter((x) => x !== m) : [...prev, m]));
   };
-
-  const activeCount = staffRoster.filter((s) => s.status === "active").length;
-  const bmCount = staffRoster.filter((s) => s.role === "branch_manager").length;
-  const loCount = staffRoster.filter((s) => s.role === "loan_officer").length;
-  const marketCount = [...new Set(staffRoster.flatMap((s) => s.markets).filter((m) => m !== "All"))].length;
 
   const fieldForChange = changeableFields.find((f) => f.key === showChangeReq);
   const inviteValid = inviteName && inviteEmail && !(inviteRole === "loan_officer" && inviteMarkets.length === 0);
