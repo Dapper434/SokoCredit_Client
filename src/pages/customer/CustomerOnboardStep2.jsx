@@ -67,3 +67,9 @@ export default function CustomerOnboardStep2() {
             onChange={(e) => setMarket(e.target.value)}
             className="w-full px-3 py-3 rounded-md border border-border text-sm text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-primary"
           ></select>
+  <option value="">Select market</option>
+            {marketOptions.map((m) => (
+              <option key={m}>{m}</option>
+            ))}
+          </select>
+        </div>
