@@ -369,13 +369,13 @@ export default function StaffAccess() {
         </div>
       </div>
 
-       {/* Invite staff modal */}
+       {/* Invite / Edit staff modal */}
       {showInvite && (
-        <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-6" onClick={() => setShowInvite(false)}>
+        <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-6" onClick={closeInviteModal}>
           <div className="bg-surface rounded border border-border w-full max-w-md p-5 flex flex-col gap-4" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold text-ink">Add Staff Member</h3>
-              <button onClick={() => setShowInvite(false)} className="text-ink-muted hover:text-ink">
+              <h3 className="text-sm font-bold text-ink">{editingStaff ? "Edit Staff Member" : "Add Staff Member"}</h3>
+              <button onClick={closeInviteModal} className="text-ink-muted hover:text-ink">
                 <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
                   <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
@@ -388,7 +388,7 @@ export default function StaffAccess() {
               </div>
               <div className="flex flex-col gap-1.5">
                 <label className="text-[10px] font-semibold text-ink-muted uppercase tracking-wider">Email Address</label>
-                <input type="email" value={inviteEmail} onChange={(e) => setInviteEmail(e.target.value)} placeholder="e.g. alice@company.com" className="px-3 py-2 rounded border border-border text-sm bg-surface focus:outline-none focus:ring-2 focus:ring-primary" />
+                <input type="email" value={inviteEmail} onChange={(e) => setInviteEmail(e.target.value)} placeholder="e.g. alice@company.com" className="px-3 py-2 rounded border border-border text-sm bg-surface focus:outline-none focus:ring-2 focus:ring-primary" disabled={!!editingStaff} />
               </div>
             </div>
              <div className="flex flex-col gap-1.5">
@@ -423,17 +423,19 @@ export default function StaffAccess() {
 
             <div className="p-3 rounded bg-ground border border-border">
               <p className="text-[11px] text-ink-muted leading-relaxed">
-                An invitation will be sent to the work email. Staff must sign in using their corporate domain email. No public sign-up is available.
+                {editingStaff
+                  ? "Changes will be saved immediately. The staff member's login credentials remain unchanged."
+                  : "An invitation will be sent to the work email. Staff must sign in using their corporate domain email. No public sign-up is available."}
               </p>
             </div>
               <button
-              onClick={() => setShowInvite(false)}
+              onClick={handleSubmitStaff}
               disabled={!inviteValid}
               className={`w-full py-2.5 rounded text-sm font-semibold transition-colors ${
                 !inviteValid ? "bg-border text-ink-muted cursor-not-allowed" : "bg-primary text-white hover:bg-primary-hover"
               }`}
             >
-              Send Invitation
+              {editingStaff ? "Save Changes" : "Send Invitation"}
             </button>
           </div>
         </div>
