@@ -22,3 +22,12 @@ export default function CustomerOnboardStep2() {
     if (!isValid) return;
     navigate("/customer/creditcheck", { state: { fullName } });
   };
+    return (
+    <CustomerAuthFrame>
+      <div className="flex flex-col lg:flex-row min-h-full">
+      <div className="bg-primary px-6 pt-8 pb-10 lg:w-2/5 lg:min-h-screen lg:flex lg:flex-col lg:justify-center lg:px-16 lg:py-0">
+        <div className="flex items-center justify-between mb-6 lg:mb-8">
+          <button
+            onClick={() => navigate("/customer/onboarding/1")}
+            className="text-white/70 text-sm flex items-center gap-1.5 hover:text-white"
+          ></button>
