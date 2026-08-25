@@ -96,3 +96,8 @@ export default function CustomerOnboardStep2() {
             ))}
           </select>
         </div>
+         <div className="pt-1 border-t border-border">
+          <p className="text-xs font-semibold text-ink-dim uppercase tracking-wide mb-3 mt-3">Next of Kin</p>
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">Full Name</label>
