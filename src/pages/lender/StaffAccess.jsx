@@ -1,6 +1,24 @@
-import { useState } from "react";
-import { staffRoster, changeRequests, changeableFields, allMarkets } from "../../data/mockLenderData";
+import { useState, useEffect } from "react";
+import { changeableFields, allMarkets } from "../../data/mockLenderData";
 import StatusBadge from "../../components/shared/StatusBadge";
+import { useToast } from "../../components/shared/Toast";
+
+// localStorage keys
+const STAFF_KEY = "sokocredit_staff_roster";
+const CHANGE_REQ_KEY = "sokocredit_change_requests";
+
+function loadFromStorage(key, fallback) {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function saveToStorage(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
+}
 
 const STAFF_STATUS_STYLES = {
   active: "bg-status-paid-bg text-status-paid-text border-status-paid-border",
