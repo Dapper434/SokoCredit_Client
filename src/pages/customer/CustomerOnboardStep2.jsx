@@ -47,3 +47,8 @@ export default function CustomerOnboardStep2() {
        <form
         onSubmit={handleSubmit}
         className="flex-1 bg-ground rounded-t-[20px] -mt-4 px-6 pt-8 pb-6 flex flex-col gap-4
+           lg:w-3/5 lg:mt-0 lg:rounded-none lg:overflow-y-auto lg:flex lg:flex-col lg:items-center lg:px-16 lg:py-16"
+      >
+        <div className="w-full lg:max-w-md flex flex-col gap-4">
+        <div className="flex flex-col gap-1.5">
+          <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">Business / Stall Name</label>
