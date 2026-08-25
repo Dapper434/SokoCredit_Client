@@ -44,9 +44,28 @@ function ToastItem({ toast, onDismiss }) {
     "pointer-events-auto px-4 py-3 rounded-lg border shadow-lg text-sm font-semibold flex items-center gap-2.5 transition-all duration-300";
 
   const variantStyles =
-    toast.variant === "success"
-      ? "bg-status-paid-bg border-status-paid-border text-status-paid-text"
-      : "bg-surface text-ink border-border";
+    toast.variant === "error"
+      ? "bg-status-overdue-bg border-status-overdue-border text-status-overdue-text"
+      : "bg-status-paid-bg border-status-paid-border text-status-paid-text";
+
+  const icon =
+    toast.variant === "error" ? (
+      <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 flex-shrink-0">
+        <path
+          fillRule="evenodd"
+          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+          clipRule="evenodd"
+        />
+      </svg>
+    ) : (
+      <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 flex-shrink-0">
+        <path
+          fillRule="evenodd"
+          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+          clipRule="evenodd"
+        />
+      </svg>
+    );
 
   return (
     <div
@@ -56,6 +75,7 @@ function ToastItem({ toast, onDismiss }) {
         transform: visible ? "translateX(0)" : "translateX(100%)",
       }}
     >
+      {icon}
       {toast.message}
     </div>
   );
