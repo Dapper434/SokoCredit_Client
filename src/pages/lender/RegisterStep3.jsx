@@ -28,7 +28,7 @@ export default function RegisterStep3() {
   };
 
   const isValid =
-    step1Data.registered_business_name?.trim() &&
+    combinedData.registered_business_name?.trim() &&
     form.disbursement_account.trim() &&
     form.collection_paybill_number.trim() &&
     form.airtel_money_paybill.trim() &&
@@ -46,10 +46,10 @@ export default function RegisterStep3() {
     setError("");
 
     const payload = {
-      name: step1Data.registered_business_name.trim(),
+      name: combinedData.registered_business_name.trim(),
       slug: toOrganizationSlug(
-        step1Data.registered_business_name,
-        step1Data.registration_number,
+        combinedData.registered_business_name,
+        combinedData.registration_number,
       ),
       admin_email: form.admin_email.trim(),
       admin_password: form.admin_password,
@@ -59,6 +59,30 @@ export default function RegisterStep3() {
     try {
       const data = await signupOrganization(payload);
       saveSession(data);
+
+      // Save the founding admin into the staff roster so they can
+      // log in again later and be recognised by name + role
+      const existingRoster = JSON.parse(localStorage.getItem("sokocredit_staff_roster") || "[]");
+      const alreadyExists = existingRoster.some(
+        (s) => s.email.toLowerCase() === form.admin_email.trim().toLowerCase()
+      );
+      if (!alreadyExists) {
+        const maxId = existingRoster.reduce((max, s) => Math.max(max, s.id || 0), 0);
+        existingRoster.push({
+          id: maxId + 1,
+          name: form.admin_full_name.trim(),
+          email: form.admin_email.trim(),
+          phone: "",
+          password: form.admin_password,
+          role: "branch_manager",
+          markets: ["All"],
+          borrowers: 0,
+          lastActive: new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }),
+          status: "active",
+        });
+        localStorage.setItem("sokocredit_staff_roster", JSON.stringify(existingRoster));
+      }
+
       navigate("/lender/dashboard");
     } catch (err) {
       setError(err.message);

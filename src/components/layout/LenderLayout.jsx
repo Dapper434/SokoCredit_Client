@@ -25,7 +25,7 @@ export default function LenderLayout() {
   // Backend doesn't return a role yet, so default to branch_manager
   // (full access) until that's wired up.
   const role = session?.role || "branch_manager";
-  const staffName = session?.staffName || institution.staffName;
+  const staffName = session?.user?.name || session?.staffName || "Staff Member";
 
   const visibleNav = navItems.filter((item) => item.roles.includes(role));
 

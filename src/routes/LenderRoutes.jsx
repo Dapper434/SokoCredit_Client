@@ -8,6 +8,7 @@ import SignIn from "../pages/lender/SignIn";
 import TwoFactorAuth from "../pages/lender/TwoFactorAuth";
 import RegisterStep1 from "../pages/lender/RegisterStep1";
 import RegisterStep2 from "../pages/lender/RegisterStep2";
+import RegisterStep3 from "../pages/lender/RegisterStep3";
 
 // Lender dashboard pages
 import CommandCenter from "../pages/lender/CommandCenter";
@@ -37,7 +38,8 @@ export default function LenderRoutes() {
       <Route path="/lender/signin" element={<SignIn />} />
       <Route path="/lender/mfa" element={<TwoFactorAuth />} />
       <Route path="/lender/register" element={<RegisterStep1 />} />
-      <Route path="/lender/register/settlement" element={<RegisterStep2 />} />
+      <Route path="/lender/register/compliance" element={<RegisterStep2 />} />
+      <Route path="/lender/register/settlement" element={<RegisterStep3 />} />
 
       {/* Lender app screens — render inside LenderLayout (sidebar, role-gated) */}
       <Route path="/lender" element={<LenderLayout />}>
