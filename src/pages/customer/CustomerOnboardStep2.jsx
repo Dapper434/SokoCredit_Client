@@ -52,3 +52,11 @@ export default function CustomerOnboardStep2() {
         <div className="w-full lg:max-w-md flex flex-col gap-4">
         <div className="flex flex-col gap-1.5">
           <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">Business / Stall Name</label>
+  <input
+            type="text"
+            placeholder="e.g. Mama Aisha Vegetables"
+            value={businessName}
+            onChange={(e) => setBusinessName(e.target.value)}
+            className="w-full px-4 py-3 rounded-md border border-border text-sm font-medium text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+          />
+        </div>
