@@ -114,3 +114,8 @@ export default function CustomerOnboardStep1() {
                     ? "border-status-paid-text bg-status-paid-bg text-status-paid-text"
                     : "border-border bg-surface text-ink-muted hover:border-primary hover:text-primary"
                 }`}
+                  >
+                {photoUploaded ? "Photo uploaded" : "Tap to take photo or choose from gallery"}
+              </button>
+              <p className="text-[11px] text-ink-muted">Stored securely — no automated face matching.</p>
+            </div>
