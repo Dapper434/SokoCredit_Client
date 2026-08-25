@@ -104,3 +104,13 @@ export default function CustomerOnboardStep1() {
               />
                  <p className="text-[11px] text-ink-muted">Must match registered M-Pesa line</p>
             </div>
+               <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">Profile Photo</label>
+              <button
+                type="button"
+                onClick={() => setPhotoUploaded(true)}
+                className={`w-full py-4 rounded-md border-2 border-dashed text-sm font-medium transition-colors ${
+                  photoUploaded
+                    ? "border-status-paid-text bg-status-paid-bg text-status-paid-text"
+                    : "border-border bg-surface text-ink-muted hover:border-primary hover:text-primary"
+                }`}
