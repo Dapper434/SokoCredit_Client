@@ -44,6 +44,7 @@ export default function StaffAccess() {
   const [inviteName, setInviteName] = useState("");
   const [inviteEmail, setInviteEmail] = useState("");
   const [invitePhone, setInvitePhone] = useState("");
+  const [invitePassword, setInvitePassword] = useState("");
   const [inviteRole, setInviteRole] = useState("loan_officer");
   const [inviteMarkets, setInviteMarkets] = useState([]);
 
@@ -78,6 +79,7 @@ export default function StaffAccess() {
     setInviteName("");
     setInviteEmail("");
     setInvitePhone("");
+    setInvitePassword("");
     setInviteRole("loan_officer");
     setInviteMarkets([]);
     setEditingStaff(null);
@@ -132,6 +134,7 @@ export default function StaffAccess() {
         name: inviteName.trim(),
         email: inviteEmail.trim(),
         phone: invitePhone.trim(),
+        password: invitePassword,
         role: inviteRole,
         markets: inviteRole === "branch_manager" ? ["All"] : [...inviteMarkets],
         borrowers: 0,
@@ -146,7 +149,7 @@ export default function StaffAccess() {
   };
 
   const fieldForChange = changeableFields.find((f) => f.key === showChangeReq);
-  const inviteValid = inviteName && inviteEmail && !(inviteRole === "loan_officer" && inviteMarkets.length === 0);
+  const inviteValid = inviteName && inviteEmail && !(inviteRole === "loan_officer" && inviteMarkets.length === 0) && (editingStaff || invitePassword.length >= 8);
   const changeValid = changeNewValue && changeReason;
 
   // ── Toggle active/inactive ──
@@ -421,6 +424,14 @@ export default function StaffAccess() {
               </div>
             )}
 
+            {/* Password field — only shown when adding new staff */}
+            {!editingStaff && (
+              <div className="flex flex-col gap-1.5">
+                <label className="text-[10px] font-semibold text-ink-muted uppercase tracking-wider">Initial Password (min 8 chars)</label>
+                <input type="password" value={invitePassword} onChange={(e) => setInvitePassword(e.target.value)} placeholder="Minimum 8 characters" minLength={8} className="px-3 py-2 rounded border border-border text-sm bg-surface focus:outline-none focus:ring-2 focus:ring-primary" />
+              </div>
+            )}
+
             <div className="p-3 rounded bg-ground border border-border">
               <p className="text-[11px] text-ink-muted leading-relaxed">
                 {editingStaff
@@ -477,7 +488,7 @@ export default function StaffAccess() {
               </p>
             </div>
 <button
-              onClick={() => setShowChangeReq(null)}
+              onClick={handleSubmitChange}
               disabled={!changeValid}
               className={`w-full py-2.5 rounded text-sm font-semibold transition-colors ${
                 !changeValid ? "bg-border text-ink-muted cursor-not-allowed" : "bg-primary text-white hover:bg-primary-hover"

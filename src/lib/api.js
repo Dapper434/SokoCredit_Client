@@ -42,16 +42,46 @@ export function clearSession() {
 }
 
 export function login(email, password) {
-  return apiRequest("/api/auth/login", {
-    method: "POST",
-    body: JSON.stringify({ email, password }),
+  // MOCKED fallback — only hit if user is not in the staff roster
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        token: "mock-jwt-token-12345",
+        user: {
+          id: 1,
+          email: email,
+          name: email.split("@")[0],
+          role: "super_admin",
+        },
+        organization: {
+          id: 1,
+          name: "Mock Organization",
+          slug: "mock-org",
+        }
+      });
+    }, 800);
   });
 }
 
 export function signupOrganization(payload) {
-  return apiRequest("/api/auth/organizations", {
-    method: "POST",
-    body: JSON.stringify(payload),
+  // MOCKED for now since backend is not up yet
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        token: "mock-jwt-token-12345",
+        user: {
+          id: 1,
+          email: payload.admin_email,
+          name: payload.admin_full_name,
+          role: "super_admin",
+        },
+        organization: {
+          id: 1,
+          name: payload.name,
+          slug: payload.slug,
+        }
+      });
+    }, 1500);
   });
 }
 

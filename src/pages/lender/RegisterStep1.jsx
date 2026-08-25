@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 // Standard license types for the dropdown selection
 const LICENSE_TYPES = [
@@ -11,15 +11,17 @@ const LICENSE_TYPES = [
 
 export default function RegisterStep1() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const prefilled = location.state?.step1 || {};
 
   // State object holding all onboarding business data
   const [form, setForm] = useState({
-    registered_business_name: "",
-    registration_number: "",
-    kra_pin: "",
-    license_category: "",
-    cbk_license_number: "",
-    head_office_address: "",
+    registered_business_name: prefilled.registered_business_name || "",
+    registration_number: prefilled.registration_number || "",
+    kra_pin: prefilled.kra_pin || "",
+    license_category: prefilled.license_category || "",
+    cbk_license_number: prefilled.cbk_license_number || "",
+    head_office_address: prefilled.head_office_address || "",
   });
 
   // Generic handler to update any form field based on its name attribute

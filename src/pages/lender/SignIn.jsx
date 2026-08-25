@@ -23,18 +23,51 @@ export default function SignIn() {
     setError("");
 
     try {
-      const staffList = JSON.parse(localStorage.getItem("soko_staff_roster") || "[]");
+      // Check the staff roster saved by StaffAccess
+      const staffList = JSON.parse(localStorage.getItem("sokocredit_staff_roster") || "[]");
       const staffMember = staffList.find(s => s.email.toLowerCase() === email.trim().toLowerCase());
       
       if (staffMember && staffMember.status === "inactive") {
         throw new Error("Your account has been deactivated. Please contact your administrator.");
       }
 
-      const data = await login(email.trim(), password);
-      // Merge the manually-selected role in until the backend returns
-      // its own role field — real data always wins if present.
-      saveSession({ role: selectedRole, ...data });
-      navigate("/lender/mfa");
+      if (staffMember) {
+        // Staff member found in roster — validate their password
+        if (staffMember.password !== password) {
+          throw new Error("Invalid email or password.");
+        }
+
+        // Enforce role gate — must match the selected login tab
+        if (staffMember.role !== selectedRole) {
+          const expected = staffMember.role === "loan_officer" ? "Loan Officer" : "Branch Manager";
+          throw new Error(`This account is registered as a ${expected}. Please use the correct sign-in tab.`);
+        }
+
+        // Auto-activate on first successful login if still "invited"
+        if (staffMember.status === "invited") {
+          staffMember.status = "active";
+          staffMember.lastActive = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+          localStorage.setItem("sokocredit_staff_roster", JSON.stringify(staffList));
+        }
+
+        // Build session from the roster data (real staff login)
+        saveSession({
+          role: staffMember.role,
+          user: {
+            id: staffMember.id,
+            email: staffMember.email,
+            name: staffMember.name,
+            role: staffMember.role,
+          },
+          token: "roster-auth-" + staffMember.id,
+        });
+        navigate("/lender/mfa");
+      } else {
+        // Not in roster — fall back to mock API login (super admin / signup flow)
+        const data = await login(email.trim(), password);
+        saveSession({ role: selectedRole, ...data });
+        navigate("/lender/mfa");
+      }
     } catch (err) {
       setError(err.message);
     } finally {
