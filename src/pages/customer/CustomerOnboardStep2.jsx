@@ -44,3 +44,6 @@ export default function CustomerOnboardStep2() {
         <h1 className="text-xl lg:text-4xl font-bold text-white mb-1 lg:mb-3">Business & Credit</h1>
         <p className="text-sm lg:text-lg text-white/70">Tell us about your business</p>
       </div>
+       <form
+        onSubmit={handleSubmit}
+        className="flex-1 bg-ground rounded-t-[20px] -mt-4 px-6 pt-8 pb-6 flex flex-col gap-4
