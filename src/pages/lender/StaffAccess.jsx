@@ -190,6 +190,8 @@ export default function StaffAccess() {
 
   return (
     <div className="p-6 flex flex-col gap-6 max-w-[1100px]">
+      <ToastContainer />
+
       {/* Header metrics */}
       <div className="grid grid-cols-4 gap-3">
       {[
@@ -210,7 +212,7 @@ export default function StaffAccess() {
         <div className="flex items-center justify-between px-5 py-3.5 border-b border-border bg-ground">
           <h2 className="text-sm font-bold text-ink">Staff Roster</h2>
           <button
-            onClick={() => setShowInvite(true)}
+            onClick={openAddModal}
             className="flex items-center gap-2 px-3 py-1.5 rounded bg-primary text-white text-xs font-semibold hover:bg-primary-hover transition-colors"
           >
             <svg viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5">
@@ -219,18 +221,25 @@ export default function StaffAccess() {
             Add Staff Member
           </button>
         </div>
-        <table className="w-full">
-          <thead>
-            <tr className="bg-ground">
-              {["Staff Member", "Role", "Assigned Markets", "Assigned Borrowers", "Last Active", "Status", "Actions"].map((h) => (
-                <th key={h} className="text-left text-[10px] font-semibold text-ink-muted uppercase tracking-wider px-4 py-2.5 font-mono">
-                  {h}
-                </th>
-              ))}
-                 </tr>
-          </thead>
-          <tbody>
-            {staffRoster.map((s) => (
+
+        {roster.length === 0 ? (
+          <div className="px-5 py-12 text-center">
+            <p className="text-ink-muted text-sm mb-1">No staff members yet</p>
+            <p className="text-ink-dim text-xs">Click "Add Staff Member" to invite your first team member.</p>
+          </div>
+        ) : (
+          <table className="w-full">
+            <thead>
+              <tr className="bg-ground">
+                {["Staff Member", "Role", "Assigned Markets", "Assigned Borrowers", "Last Active", "Status", "Actions"].map((h) => (
+                  <th key={h} className="text-left text-[10px] font-semibold text-ink-muted uppercase tracking-wider px-4 py-2.5 font-mono">
+                    {h}
+                  </th>
+                ))}
+                   </tr>
+            </thead>
+            <tbody>
+              {roster.map((s) => (
               <tr key={s.id} className="border-t border-border-dim hover:bg-ground transition-colors">
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-2.5">
@@ -261,7 +270,7 @@ export default function StaffAccess() {
                 <td className="px-4 py-3 text-xs text-ink-dim font-mono">{s.markets.join(", ")}</td>
                 <td className="px-4 py-3 text-sm font-mono font-semibold text-ink">{s.borrowers > 0 ? s.borrowers : "—"}</td>
                 <td className="px-4 py-3 text-xs text-ink-muted font-mono">{s.lastActive}</td>
-                  <td className="px-4 py-3">
+                <td className="px-4 py-3">
                   <span className={`text-[10px] font-mono font-semibold px-2 py-0.5 rounded border ${STAFF_STATUS_STYLES[s.status]}`}>
                     {s.status.charAt(0).toUpperCase() + s.status.slice(1)}
                   </span>
@@ -272,10 +281,16 @@ export default function StaffAccess() {
                       <button className="text-[10px] font-mono text-status-due-text hover:underline">Resend invite</button>
                     ) : (
                       <>
-                        <button className="text-[10px] font-mono text-ink-dim border border-border px-2 py-0.5 rounded hover:bg-ground">
+                        <button
+                          onClick={() => openEditModal(s)}
+                          className="text-[10px] font-mono text-ink-dim border border-border px-2 py-0.5 rounded hover:bg-ground"
+                        >
                           Edit
                         </button>
-                        <button className="text-[10px] font-mono text-status-overdue-text hover:underline">
+                        <button
+                          onClick={() => handleToggleStatus(s.id)}
+                          className="text-[10px] font-mono text-status-overdue-text hover:underline"
+                        >
                           {s.status === "active" ? "Deactivate" : "Reactivate"}
                         </button>
                       </>
@@ -286,6 +301,7 @@ export default function StaffAccess() {
             ))}
           </tbody>
         </table>
+        )}
       </div>
 
       {/* Settings & Change Requests */}
