@@ -90,3 +90,9 @@ export default function CustomerOnboardStep2() {
             onChange={(e) => setTurnover(e.target.value)}
             className="w-full px-3 py-3 rounded-md border border-border text-sm text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-primary"
           ></select>
+           <option value="">Select range</option>
+            {turnoverRanges.map((t) => (
+              <option key={t}>{t}</option>
+            ))}
+          </select>
+        </div>
