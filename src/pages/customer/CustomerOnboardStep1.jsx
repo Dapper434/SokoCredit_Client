@@ -93,3 +93,12 @@ export default function CustomerOnboardStep1() {
                 </select>
               </div>
             </div>
+             <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">M-Pesa Phone Number</label>
+              <input
+                type="tel"
+                placeholder="07XX XXX XXX"
+                value={mpesaPhone}
+                onChange={(e) => setMpesaPhone(e.target.value)}
+                className="w-full px-4 py-3 rounded-md border border-border text-sm font-medium text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+              />
