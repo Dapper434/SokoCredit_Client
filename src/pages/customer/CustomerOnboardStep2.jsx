@@ -83,3 +83,10 @@ export default function CustomerOnboardStep2() {
             className="w-full px-4 py-3 rounded-md border border-border text-sm font-medium text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
           />
         </div>
+        <div className="flex flex-col gap-1.5">
+          <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">Monthly Turnover</label>
+          <select
+            value={turnover}
+            onChange={(e) => setTurnover(e.target.value)}
+            className="w-full px-3 py-3 rounded-md border border-border text-sm text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-primary"
+          ></select>
