@@ -76,3 +76,8 @@ export default function CustomerOnboardStep1() {
                   type="date"
                   value={dob}
                   onChange={(e) => setDob(e.target.value)}
+                      className="w-full px-3 py-3 rounded-md border border-border text-sm text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+              </div>
+              <div className="flex-1 flex flex-col gap-1.5">
+                <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">Gender</label>
