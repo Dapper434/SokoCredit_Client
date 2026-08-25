@@ -86,3 +86,10 @@ export default function CustomerOnboardStep1() {
                   onChange={(e) => setGender(e.target.value)}
                   className="w-full px-3 py-3 rounded-md border border-border text-sm text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-primary"
                 ></select>
+                 <option value="">Select</option>
+                  <option>Female</option>
+                  <option>Male</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
