@@ -8,8 +8,10 @@ export default function CustomerAuthFrame({ children }) {
   const navigate = useNavigate();
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-primary p-0 sm:p-6">
-      <div className="relative w-full sm:w-[390px] sm:max-h-[844px] bg-ground sm:rounded-[32px] sm:overflow-hidden sm:shadow-2xl flex flex-col min-h-screen sm:min-h-0 sm:h-[844px]">
+    // Full-height page background — content is still single-column, just
+    // wider and centered on larger screens instead of phone-width
+    <div className="min-h-screen bg-ground flex flex-col">
+      <div className="relative w-full max-w-2xl lg:max-w-none mx-auto flex flex-col min-h-screen">
         <div className="absolute top-4 left-4 z-10">
           <button
             onClick={() => navigate("/")}
