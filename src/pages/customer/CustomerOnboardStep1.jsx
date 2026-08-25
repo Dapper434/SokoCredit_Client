@@ -53,3 +53,8 @@ export default function CustomerOnboardStep1() {
               <input
                 type="text"
                 placeholder="As on National ID"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                className="w-full px-4 py-3 rounded-md border border-border text-sm font-medium text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+              />
+            </div>
