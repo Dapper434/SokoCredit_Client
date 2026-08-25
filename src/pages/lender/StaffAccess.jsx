@@ -74,6 +74,35 @@ export default function StaffAccess() {
     setInviteMarkets((prev) => (prev.includes(m) ? prev.filter((x) => x !== m) : [...prev, m]));
   };
 
+  const resetInviteForm = () => {
+    setInviteName("");
+    setInviteEmail("");
+    setInvitePhone("");
+    setInviteRole("loan_officer");
+    setInviteMarkets([]);
+    setEditingStaff(null);
+  };
+
+  const openAddModal = () => {
+    resetInviteForm();
+    setShowInvite(true);
+  };
+
+  const openEditModal = (staff) => {
+    setEditingStaff(staff);
+    setInviteName(staff.name);
+    setInviteEmail(staff.email);
+    setInvitePhone(staff.phone);
+    setInviteRole(staff.role);
+    setInviteMarkets(staff.markets.includes("All") ? [] : [...staff.markets]);
+    setShowInvite(true);
+  };
+
+  const closeInviteModal = () => {
+    setShowInvite(false);
+    resetInviteForm();
+  };
+
   const fieldForChange = changeableFields.find((f) => f.key === showChangeReq);
   const inviteValid = inviteName && inviteEmail && !(inviteRole === "loan_officer" && inviteMarkets.length === 0);
   const changeValid = changeNewValue && changeReason;
