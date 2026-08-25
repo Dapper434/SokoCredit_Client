@@ -14,3 +14,7 @@ export default function CustomerOnboardStep2() {
   const [turnover, setTurnover] = useState("");
   const [kinName, setKinName] = useState("");
   const [kinPhone, setKinPhone] = useState("");
+
+  const isValid = businessName.trim() !== "" && market.trim() !== "";
+
+  
