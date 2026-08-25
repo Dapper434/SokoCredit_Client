@@ -41,11 +41,16 @@ function ToastItem({ toast, onDismiss }) {
   }, [toast.id, onDismiss]);
 
   const baseStyles =
-    "pointer-events-auto px-4 py-3 rounded-lg border shadow-lg text-sm font-semibold flex items-center gap-2.5 transition-all duration-300 bg-surface text-ink border-border";
+    "pointer-events-auto px-4 py-3 rounded-lg border shadow-lg text-sm font-semibold flex items-center gap-2.5 transition-all duration-300";
+
+  const variantStyles =
+    toast.variant === "success"
+      ? "bg-status-paid-bg border-status-paid-border text-status-paid-text"
+      : "bg-surface text-ink border-border";
 
   return (
     <div
-      className={baseStyles}
+      className={`${baseStyles} ${variantStyles}`}
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? "translateX(0)" : "translateX(100%)",
