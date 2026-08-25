@@ -12,3 +12,9 @@ export default function CustomerOnboardStep1() {
   const [photoUploaded, setPhotoUploaded] = useState(false);
 
   const isValid = fullName.trim() !== "" && idNumber.trim() !== "";
+
+  const handleContinue = (e) => {
+    e.preventDefault();
+    if (!isValid) return;
+    navigate("/customer/onboarding/2", { state: { fullName } });
+  };
