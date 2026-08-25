@@ -46,7 +46,7 @@ export default function CustomerOnboardStep1() {
           onSubmit={handleContinue}
           className="flex-1 bg-ground rounded-t-[20px] -mt-4 px-6 pt-8 pb-6 flex flex-col gap-4
                      lg:w-3/5 lg:mt-0 lg:rounded-none lg:overflow-y-auto lg:flex lg:flex-col lg:items-center lg:px-16 lg:py-16"
-        ></form>
+        >
           <div className="w-full lg:max-w-md flex flex-col gap-4">
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">Full Legal Name</label>
@@ -58,7 +58,7 @@ export default function CustomerOnboardStep1() {
                 className="w-full px-4 py-3 rounded-md border border-border text-sm font-medium text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               />
             </div>
-              <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-1.5">
               <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">National ID Number</label>
               <input
                 type="text"
@@ -69,31 +69,31 @@ export default function CustomerOnboardStep1() {
                 className="w-full px-4 py-3 rounded-md border border-border text-sm font-medium text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               />
             </div>
-              <div className="flex gap-3">
+            <div className="flex gap-3">
               <div className="flex-1 flex flex-col gap-1.5">
                 <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">Date of Birth</label>
                 <input
                   type="date"
                   value={dob}
                   onChange={(e) => setDob(e.target.value)}
-                      className="w-full px-3 py-3 rounded-md border border-border text-sm text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-3 py-3 rounded-md border border-border text-sm text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </div>
               <div className="flex-1 flex flex-col gap-1.5">
                 <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">Gender</label>
-                    <select
+                <select
                   value={gender}
                   onChange={(e) => setGender(e.target.value)}
                   className="w-full px-3 py-3 rounded-md border border-border text-sm text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-primary"
-                ></select>
-                 <option value="">Select</option>
-                  <option>Female</option>
-                  <option>Male</option>
-                  <option>Other</option>
+                >
+                  <option value="">Select</option>
+                  <option value="Female">Female</option>
+                  <option value="Male">Male</option>
+                  <option value="Other">Other</option>
                 </select>
               </div>
             </div>
-             <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-1.5">
               <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">M-Pesa Phone Number</label>
               <input
                 type="tel"
@@ -102,9 +102,9 @@ export default function CustomerOnboardStep1() {
                 onChange={(e) => setMpesaPhone(e.target.value)}
                 className="w-full px-4 py-3 rounded-md border border-border text-sm font-medium text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               />
-                 <p className="text-[11px] text-ink-muted">Must match registered M-Pesa line</p>
+              <p className="text-[11px] text-ink-muted">Must match registered M-Pesa line</p>
             </div>
-               <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-1.5">
               <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">Profile Photo</label>
               <button
                 type="button"
@@ -114,8 +114,25 @@ export default function CustomerOnboardStep1() {
                     ? "border-status-paid-text bg-status-paid-bg text-status-paid-text"
                     : "border-border bg-surface text-ink-muted hover:border-primary hover:text-primary"
                 }`}
-                  >
+              >
                 {photoUploaded ? "Photo uploaded" : "Tap to take photo or choose from gallery"}
               </button>
               <p className="text-[11px] text-ink-muted">Stored securely — no automated face matching.</p>
             </div>
+            <div className="mt-2">
+              <button
+                type="submit"
+                disabled={!isValid}
+                className={`w-full py-3.5 rounded-md font-semibold text-sm transition-all ${
+                  !isValid ? "bg-border text-ink-muted cursor-not-allowed" : "bg-primary text-white hover:bg-primary-hover"
+                }`}
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </CustomerAuthFrame>
+  );
+}
