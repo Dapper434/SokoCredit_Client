@@ -11,6 +11,7 @@ export default function RegisterStep3() {
   const [form, setForm] = useState({
     disbursement_account: "",
     collection_paybill_number: "",
+    airtel_money_paybill: "",
     default_interest_rate: "",
     default_penalty_rate: "",
     admin_full_name: "",
@@ -30,6 +31,7 @@ export default function RegisterStep3() {
     step1Data.registered_business_name?.trim() &&
     form.disbursement_account.trim() &&
     form.collection_paybill_number.trim() &&
+    form.airtel_money_paybill.trim() &&
     form.default_interest_rate.trim() &&
     form.default_penalty_rate.trim() &&
     form.admin_full_name.trim() &&
@@ -120,12 +122,28 @@ export default function RegisterStep3() {
             </div>
             <div>
               <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
-                M-Pesa Paybill / Till Number
+                M-Pesa Paybill Number
               </label>
               <input
                 type="text"
                 name="collection_paybill_number"
                 value={form.collection_paybill_number}
+                onChange={handleChange}
+                placeholder="e.g. 123456"
+                className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
+                           placeholder:text-ink-muted/50
+                           focus:outline-none focus:border-primary transition-colors"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-accent uppercase tracking-wide mb-2">
+                Airtel Money Paybill Number
+              </label>
+              <input
+                type="text"
+                name="airtel_money_paybill"
+                value={form.airtel_money_paybill}
                 onChange={handleChange}
                 placeholder="e.g. 123456"
                 className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent
