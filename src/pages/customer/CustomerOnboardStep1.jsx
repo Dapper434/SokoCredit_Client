@@ -10,3 +10,5 @@ export default function CustomerOnboardStep1() {
   const [gender, setGender] = useState("");
   const [mpesaPhone, setMpesaPhone] = useState("");
   const [photoUploaded, setPhotoUploaded] = useState(false);
+
+  const isValid = fullName.trim() !== "" && idNumber.trim() !== "";
