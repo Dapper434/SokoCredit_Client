@@ -73,3 +73,13 @@ export default function CustomerOnboardStep2() {
             ))}
           </select>
         </div>
+   <div className="flex flex-col gap-1.5">
+          <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">Stall Number</label>
+          <input
+            type="text"
+            placeholder="e.g. A-24"
+            value={stall}
+            onChange={(e) => setStall(e.target.value)}
+            className="w-full px-4 py-3 rounded-md border border-border text-sm font-medium text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+          />
+        </div>
