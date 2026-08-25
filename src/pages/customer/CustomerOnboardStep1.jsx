@@ -33,3 +33,11 @@ export default function CustomerOnboardStep1() {
               </svg>
               Back
             </button>
+            <span className="text-xs text-white/60 font-mono">Step 1 of 2</span>
+          </div>
+          <div className="w-full h-1 bg-white/20 rounded-full mb-5 lg:mb-8 lg:max-w-xs">
+            <div className="h-full w-1/2 bg-white rounded-full" />
+          </div>
+          <h1 className="text-xl lg:text-4xl font-bold text-white mb-1 lg:mb-3">Personal Identity</h1>
+          <p className="text-sm lg:text-lg text-white/70">Required for account verification</p>
+        </div>
