@@ -103,6 +103,48 @@ export default function StaffAccess() {
     resetInviteForm();
   };
 
+  // ── Add or update a staff member ──
+  const handleSubmitStaff = () => {
+    if (!inviteValid) return;
+
+    if (editingStaff) {
+      // Update existing staff
+      setRoster((prev) =>
+        prev.map((s) =>
+          s.id === editingStaff.id
+            ? {
+                ...s,
+                name: inviteName.trim(),
+                email: inviteEmail.trim(),
+                phone: invitePhone.trim(),
+                role: inviteRole,
+                markets: inviteRole === "branch_manager" ? ["All"] : [...inviteMarkets],
+              }
+            : s
+        )
+      );
+      toast("Staff member updated successfully");
+    } else {
+      // Add new staff
+      const maxId = roster.reduce((max, s) => Math.max(max, s.id || 0), 0);
+      const newStaff = {
+        id: maxId + 1,
+        name: inviteName.trim(),
+        email: inviteEmail.trim(),
+        phone: invitePhone.trim(),
+        role: inviteRole,
+        markets: inviteRole === "branch_manager" ? ["All"] : [...inviteMarkets],
+        borrowers: 0,
+        lastActive: "Never",
+        status: "invited",
+      };
+      setRoster((prev) => [...prev, newStaff]);
+      toast("Invitation sent to " + inviteEmail.trim());
+    }
+
+    closeInviteModal();
+  };
+
   const fieldForChange = changeableFields.find((f) => f.key === showChangeReq);
   const inviteValid = inviteName && inviteEmail && !(inviteRole === "loan_officer" && inviteMarkets.length === 0);
   const changeValid = changeNewValue && changeReason;
