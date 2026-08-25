@@ -2,3 +2,8 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { marketOptions, turnoverRanges } from "../../data/mockCustomerData";
 import CustomerAuthFrame from "../../components/layout/CustomerAuthFrame";
+
+export default function CustomerOnboardStep2() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const fullName = location.state?.fullName || "";
