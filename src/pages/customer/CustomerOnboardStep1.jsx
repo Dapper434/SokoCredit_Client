@@ -41,3 +41,9 @@ export default function CustomerOnboardStep1() {
           <h1 className="text-xl lg:text-4xl font-bold text-white mb-1 lg:mb-3">Personal Identity</h1>
           <p className="text-sm lg:text-lg text-white/70">Required for account verification</p>
         </div>
+
+  <form
+          onSubmit={handleContinue}
+          className="flex-1 bg-ground rounded-t-[20px] -mt-4 px-6 pt-8 pb-6 flex flex-col gap-4
+                     lg:w-3/5 lg:mt-0 lg:rounded-none lg:overflow-y-auto lg:flex lg:flex-col lg:items-center lg:px-16 lg:py-16"
+        ></form>
