@@ -149,6 +149,45 @@ export default function StaffAccess() {
   const inviteValid = inviteName && inviteEmail && !(inviteRole === "loan_officer" && inviteMarkets.length === 0);
   const changeValid = changeNewValue && changeReason;
 
+  // ── Toggle active/inactive ──
+  const handleToggleStatus = (staffId) => {
+    setRoster((prev) =>
+      prev.map((s) => {
+        if (s.id !== staffId) return s;
+        const newStatus = s.status === "active" ? "inactive" : "active";
+        return { ...s, status: newStatus };
+      })
+    );
+    const staff = roster.find((s) => s.id === staffId);
+    const action = staff?.status === "active" ? "deactivated" : "reactivated";
+    toast(`${staff?.name || "Staff member"} has been ${action}`);
+  };
+
+  // ── Change request ──
+  const handleSubmitChange = () => {
+    if (!changeValid || !fieldForChange) return;
+
+    const today = new Date();
+    const dateStr = today.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+    const seqNum = String(changeReqs.length + 1).padStart(3, "0");
+
+    const newReq = {
+      id: `CR-${today.getFullYear()}-${seqNum}`,
+      field: fieldForChange.label,
+      oldValue: fieldForChange.current,
+      newValue: changeNewValue.trim(),
+      reason: changeReason.trim(),
+      status: "pending",
+      date: dateStr,
+    };
+
+    setChangeReqs((prev) => [...prev, newReq]);
+    toast("Change request submitted for review");
+    setShowChangeReq(null);
+    setChangeNewValue("");
+    setChangeReason("");
+  };
+
   return (
     <div className="p-6 flex flex-col gap-6 max-w-[1100px]">
       {/* Header metrics */}
