@@ -17,4 +17,8 @@ export default function CustomerOnboardStep2() {
 
   const isValid = businessName.trim() !== "" && market.trim() !== "";
 
-  
+   const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!isValid) return;
+    navigate("/customer/creditcheck", { state: { fullName } });
+  };
