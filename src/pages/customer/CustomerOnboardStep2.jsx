@@ -34,3 +34,13 @@ export default function CustomerOnboardStep2() {
             <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
               <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
             </svg>
+            Back
+          </button>
+          <span className="text-xs text-white/60 font-mono">Step 2 of 2</span>
+        </div>
+        <div className="w-full h-1 bg-white/20 rounded-full mb-5 lg:mb-8 lg:max-w-xs">
+          <div className="h-full w-full bg-white rounded-full" />
+        </div>
+        <h1 className="text-xl lg:text-4xl font-bold text-white mb-1 lg:mb-3">Business & Credit</h1>
+        <p className="text-sm lg:text-lg text-white/70">Tell us about your business</p>
+      </div>
