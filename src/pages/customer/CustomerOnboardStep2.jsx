@@ -17,18 +17,18 @@ export default function CustomerOnboardStep2() {
 
   const isValid = businessName.trim() !== "" && market.trim() !== "";
 
-  const handleSubmit = (e) => {
+   const handleSubmit = (e) => {
     e.preventDefault();
     if (!isValid) return;
     navigate("/customer/creditcheck", { state: { fullName } });
   };
-
-  return (
+    return (
     <CustomerAuthFrame>
-      <div className="flex flex-col min-h-full">
-      <div className="bg-primary px-6 pt-8 pb-10">
-        <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col lg:flex-row min-h-full">
+      <div className="bg-primary px-6 pt-8 pb-10 lg:w-2/5 lg:min-h-screen lg:flex lg:flex-col lg:justify-center lg:px-16 lg:py-0">
+        <div className="flex items-center justify-between mb-6 lg:mb-8">
           <button
+            type="button"
             onClick={() => navigate("/customer/onboarding/1")}
             className="text-white/70 text-sm flex items-center gap-1.5 hover:text-white"
           >
@@ -39,20 +39,21 @@ export default function CustomerOnboardStep2() {
           </button>
           <span className="text-xs text-white/60 font-mono">Step 2 of 2</span>
         </div>
-        <div className="w-full h-1 bg-white/20 rounded-full mb-5">
+        <div className="w-full h-1 bg-white/20 rounded-full mb-5 lg:mb-8 lg:max-w-xs">
           <div className="h-full w-full bg-white rounded-full" />
         </div>
-        <h1 className="text-xl font-bold text-white mb-1">Business & Credit</h1>
-        <p className="text-sm text-white/70">Tell us about your business</p>
+        <h1 className="text-xl lg:text-4xl font-bold text-white mb-1 lg:mb-3">Business & Credit</h1>
+        <p className="text-sm lg:text-lg text-white/70">Tell us about your business</p>
       </div>
-
-      <form
+       <form
         onSubmit={handleSubmit}
-        className="flex-1 bg-ground rounded-t-[20px] -mt-4 px-6 pt-8 pb-6 flex flex-col gap-4"
+        className="flex-1 bg-ground rounded-t-[20px] -mt-4 px-6 pt-8 pb-6 flex flex-col gap-4
+           lg:w-3/5 lg:mt-0 lg:rounded-none lg:overflow-y-auto lg:flex lg:flex-col lg:items-center lg:px-16 lg:py-16"
       >
+        <div className="w-full lg:max-w-md flex flex-col gap-4">
         <div className="flex flex-col gap-1.5">
           <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">Business / Stall Name</label>
-          <input
+  <input
             type="text"
             placeholder="e.g. Mama Aisha Vegetables"
             value={businessName}
@@ -60,7 +61,6 @@ export default function CustomerOnboardStep2() {
             className="w-full px-4 py-3 rounded-md border border-border text-sm font-medium text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
           />
         </div>
-
         <div className="flex flex-col gap-1.5">
           <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">Market</label>
           <select
@@ -74,8 +74,7 @@ export default function CustomerOnboardStep2() {
             ))}
           </select>
         </div>
-
-        <div className="flex flex-col gap-1.5">
+   <div className="flex flex-col gap-1.5">
           <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">Stall Number</label>
           <input
             type="text"
@@ -85,7 +84,6 @@ export default function CustomerOnboardStep2() {
             className="w-full px-4 py-3 rounded-md border border-border text-sm font-medium text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
           />
         </div>
-
         <div className="flex flex-col gap-1.5">
           <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">Monthly Turnover</label>
           <select
@@ -99,20 +97,19 @@ export default function CustomerOnboardStep2() {
             ))}
           </select>
         </div>
-
-        <div className="pt-1 border-t border-border">
+         <div className="pt-1 border-t border-border">
           <p className="text-xs font-semibold text-ink-dim uppercase tracking-wide mb-3 mt-3">Next of Kin</p>
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">Full Name</label>
-              <input
+                <input
                 type="text"
                 placeholder="e.g. Grace Wanjiku"
                 value={kinName}
                 onChange={(e) => setKinName(e.target.value)}
                 className="w-full px-4 py-3 rounded-md border border-border text-sm font-medium text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               />
-            </div>
+                </div>
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-semibold text-ink-dim uppercase tracking-wide">Phone Number</label>
               <input
@@ -125,8 +122,7 @@ export default function CustomerOnboardStep2() {
             </div>
           </div>
         </div>
-
-        <div className="mt-2">
+ <div className="mt-2">
           <button
             type="submit"
             disabled={!isValid}
@@ -136,6 +132,7 @@ export default function CustomerOnboardStep2() {
           >
             Submit Application
           </button>
+        </div>
         </div>
       </form>
       </div>
