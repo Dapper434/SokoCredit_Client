@@ -42,16 +42,36 @@ export function clearSession() {
 }
 
 export function login(email, password) {
-  return apiRequest("/api/auth/login", {
-    method: "POST",
-    body: JSON.stringify({ email, password }),
+  // Mock login to bypass CORS while backend is unbuilt
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve({
+        token: "mock-jwt-token-123",
+        user: {
+          id: 1,
+          email: email,
+          name: "Mock Admin",
+        },
+      });
+    }, 500);
   });
 }
 
 export function signupOrganization(payload) {
-  return apiRequest("/api/auth/institutions", {
-    method: "POST",
-    body: JSON.stringify(payload),
+  // Mock signup to bypass CORS and populate session with real input name
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        token: "mock-jwt-token-123",
+        role: "branch_manager",
+        user: {
+          id: 1,
+          email: payload.admin_email,
+          name: payload.admin_full_name,
+          role: "branch_manager"
+        }
+      });
+    }, 500);
   });
 }
 

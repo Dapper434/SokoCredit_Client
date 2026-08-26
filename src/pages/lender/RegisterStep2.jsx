@@ -9,15 +9,16 @@ export default function RegisterStep2() {
   const location = useLocation();
 
   const step1Data = location.state?.step1 || {};
+  const initialStep2 = location.state?.step2 || {};
 
   const [form, setForm] = useState({
-    county_business_permit: "",
-    odpc_registration_number: "",
-    director_full_name: "",
-    director_national_id: "",
-    official_work_email: "",
-    estimated_staff: "",
-    markets_covered: [],
+    county_business_permit: initialStep2.county_business_permit || "",
+    odpc_registration_number: initialStep2.odpc_registration_number || "",
+    director_full_name: initialStep2.director_full_name || "",
+    director_national_id: initialStep2.director_national_id || "",
+    official_work_email: initialStep2.official_work_email || "",
+    estimated_staff: initialStep2.estimated_staff || "",
+    markets_covered: initialStep2.markets_covered || [],
   });
 
   const handleChange = (e) => {
@@ -59,7 +60,7 @@ export default function RegisterStep2() {
         
         {/* Navigation back to step 1 (preserving data) */}
         <button
-          onClick={() => navigate("/lender/register")}
+          onClick={() => navigate("/lender/register", { state: { step1: step1Data, step2: form } })}
           className="text-ink-muted text-sm flex items-center gap-1.5 hover:text-ink transition-colors mb-4 cursor-pointer"
         >
           ← Back

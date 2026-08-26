@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 // Standard license types for the dropdown selection
 const LICENSE_TYPES = [
@@ -11,9 +11,11 @@ const LICENSE_TYPES = [
 
 export default function RegisterStep1() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   // State object holding all onboarding business data
-  const [form, setForm] = useState({
+  // Restores data if the user navigates "Back" from Step 2
+  const [form, setForm] = useState(location.state?.step1 || {
     registered_business_name: "",
     registration_number: "",
     kra_pin: "",

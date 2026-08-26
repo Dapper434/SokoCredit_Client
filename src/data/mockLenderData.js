@@ -8,25 +8,15 @@ export const institution = {
 // Staff roles used for RBAC in LenderLayout's nav filtering.
 // "branch_manager" sees every screen; "loan_officer" sees only the
 // day-to-day operational screens (not Command Center or Staff & Access).
-export const staffRoster = [
-  { id: 1, name: "Sarah Kamau", email: "sarah@juamfi.co.ke", phone: "0722 100 200", role: "branch_manager", markets: ["All"], borrowers: 647, lastActive: "Today, 09:41", status: "active" },
-  { id: 2, name: "James Ochieng", email: "james@juamfi.co.ke", phone: "0711 200 300", role: "loan_officer", markets: ["Toi", "Kangemi"], borrowers: 87, lastActive: "Today, 08:15", status: "active" },
-  { id: 3, name: "Grace Mwangi", email: "grace@juamfi.co.ke", phone: "0733 300 400", role: "loan_officer", markets: ["Gikomba"], borrowers: 142, lastActive: "Yesterday, 17:02", status: "active" },
-  { id: 4, name: "Peter Auma", email: "peter@juamfi.co.ke", phone: "0701 400 500", role: "loan_officer", markets: ["Muthurwa", "Wakulima"], borrowers: 109, lastActive: "3 days ago", status: "inactive" },
-  { id: 5, name: "Rose Njeri", email: "rose@juamfi.co.ke", phone: "0714 500 600", role: "loan_officer", markets: ["Ngara"], borrowers: 0, lastActive: "Never", status: "invited" },
-];
+export const staffRoster = [];
 
 // Staff & Access — settlement/rate change requests routed through compliance review
-export const changeRequests = [
-  { id: "CR-2026-001", field: "Default Monthly Interest Rate", oldValue: "15%", newValue: "13%", status: "pending", date: "22 Aug 2026", reason: "Market rate adjustment - borrower retention" },
-  { id: "CR-2026-002", field: "Repayment M-Pesa Paybill", oldValue: "123456", newValue: "234567", reason: "Switching to new Safaricom business account", status: "approved", date: "10 Aug 2026" },
-  { id: "CR-2026-003", field: "Default Late Penalty Rate", oldValue: "5%", newValue: "3%", reason: "Portfolio growth strategy", status: "rejected", date: "1 Aug 2026" },
-];
+export const changeRequests = [];
 
 export const changeableFields = [
   { key: "interest", label: "Default Monthly Interest Rate", current: "15%" },
   { key: "penalty", label: "Default Late Penalty Rate", current: "5%" },
-  { key: "paybill", label: "Repayment M-Pesa Paybill / Till No.", current: "123456" },
+  { key: "paybill", label: "Repayment M-Pesa Paybill", current: "123456" },
   { key: "bank", label: "Disbursement Bank Account", current: "Equity Bank - 1234567890" },
 ];
 
