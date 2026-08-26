@@ -10,7 +10,7 @@ export default function RegisterStep3() {
 
   const [form, setForm] = useState({
     mpesa_paybill: "",
-    airtel_money_till: "",
+    airtel_money_paybill: "",
     default_interest_rate: "",
     default_penalty_rate: "",
     admin_password: "",
@@ -29,7 +29,7 @@ export default function RegisterStep3() {
   const isValid =
     combinedData.registered_business_name?.trim() &&
     form.mpesa_paybill.trim() &&
-    form.airtel_money_till.trim() &&
+    form.airtel_money_paybill.trim() &&
     form.default_interest_rate.trim() &&
     form.default_penalty_rate.trim() &&
     form.admin_password.length >= 8 &&
@@ -75,6 +75,23 @@ export default function RegisterStep3() {
 
     try {
       const data = await signupOrganization(payload);
+      
+      // Auto-save the founding admin to the Staff Roster
+      const initialAdmin = {
+        id: 1,
+        name: payload.admin_full_name,
+        email: payload.admin_email,
+        phone: "",
+        password: payload.admin_password,
+        role: "branch_manager",
+        markets: ["All"],
+        borrowers: 0,
+        lastActive: "Just now",
+        status: "active"
+      };
+      const existingRoster = JSON.parse(localStorage.getItem("sokocredit_staff_roster") || "[]");
+      localStorage.setItem("sokocredit_staff_roster", JSON.stringify([...existingRoster, initialAdmin]));
+
       saveSession(data);
       navigate("/lender/dashboard");
     } catch (err) {
@@ -92,7 +109,7 @@ export default function RegisterStep3() {
         {/* Navigation back to step 2 (preserving data) */}
         <button
           onClick={() =>
-            navigate("/lender/register/compliance", { state: { step1: combinedData } })
+            navigate("/lender/register/compliance", { state: { step1: combinedData, step2: combinedData } })
           }
           className="text-ink-muted text-sm flex items-center gap-1.5 hover:text-ink transition-colors mb-4 cursor-pointer"
         >
@@ -127,7 +144,7 @@ export default function RegisterStep3() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
                 <label className="block text-[10px] font-semibold text-ink-dim uppercase tracking-wide mb-2">
-                  M-Pesa Paybill / Till
+                  M-Pesa Paybill Number
                 </label>
                 <input
                   type="text"
@@ -143,12 +160,12 @@ export default function RegisterStep3() {
               </div>
               <div>
                 <label className="block text-[10px] font-semibold text-ink-dim uppercase tracking-wide mb-2">
-                  Airtel Money Till / Paybill
+                  Airtel Money Paybill Number
                 </label>
                 <input
                   type="text"
-                  name="airtel_money_till"
-                  value={form.airtel_money_till}
+                  name="airtel_money_paybill"
+                  value={form.airtel_money_paybill}
                   onChange={handleChange}
                   placeholder="e.g. 123456"
                   className="w-full border border-border rounded-md px-4 py-3 text-ink bg-transparent

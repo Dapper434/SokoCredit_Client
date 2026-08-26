@@ -1,8 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import OtpInput from "../../components/otp/OtpInput";
+import { getSession } from "../../lib/api";
 
 export default function TwoFactorAuth() {
   const navigate = useNavigate();
+  const session = getSession();
+  const email = session?.user?.email || "your email";
 
   const handleVerify = () => {
     navigate("/lender/dashboard");
@@ -29,7 +32,7 @@ export default function TwoFactorAuth() {
         </h1>
         <p className="text-ink-dim mb-8">
           Required second step. Enter the 6-digit code sent to{" "}
-          <span className="font-semibold text-ink">oman@gmail.com</span>.
+          <span className="font-semibold text-ink">{email}</span>.
         </p>
 
         <div className="bg-surface border border-border rounded-lg p-6">
