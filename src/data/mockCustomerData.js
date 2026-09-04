@@ -8,10 +8,8 @@ export const borrowerProfile = {
   phone: "0712 345 678",
   market: "Toi Market",
   stall: "A-24",
-  tier: "B",
-  tierLabel: "Good standing",
-  availableCredit: 15000,
-  sokoPoints: 840,
+  // No tier / availableCredit here on purpose: both are real, per-customer values
+  // served by the backend (profile.credit_tier and getAvailableCredit).
   hasActiveLoan: true,
   inArrears: false,
   savingsDays: 10,
@@ -36,8 +34,9 @@ export const repaymentDiscipline = [
 
 // Loan Wizard — constants and options
 export const loanWizardConfig = {
-  limit: 15000,
-  interestRate: 0.15,
+  // No limit or interestRate here: the borrowing ceiling comes from
+  // get_available_credit (see getAvailableCredit) and the rate from
+  // GET /api/underwriting/loan-terms (see getLoanTerms).
   processingFeeRate: 0.03,
   exciseRate: 0.2,
   quickAmounts: [2000, 5000, 8000, 10000, 12000, 15000],
@@ -121,23 +120,9 @@ export const extensionTerms = [
   "Grace period (interest only)",
 ];
 
-// Profile Center — badges, redemptions, documents
-export const badges = [
-  { id: 1, name: "First Loan", icon: "🌱", earned: true, pts: 50 },
-  { id: 2, name: "On-Time Streak", icon: "⚡", earned: true, pts: 100 },
-  { id: 3, name: "4 Cycles Done", icon: "🔁", earned: true, pts: 200 },
-  { id: 4, name: "Top Borrower", icon: "🏆", earned: false, pts: 500 },
-  { id: 5, name: "6-Month Club", icon: "📅", earned: false, pts: 300 },
-  { id: 6, name: "Market Leader", icon: "🌟", earned: false, pts: 400 },
-];
-
-export const pointRedemptions = [
-  { label: "Reduced processing fee", cost: 200 },
-  { label: "Priority approval review", cost: 400 },
-  { label: "Airtime top-up (KES 50)", cost: 100 },
-  { label: "Clearance certificate (free)", cost: 0 },
-];
-
+// Profile Center — documents
+// SokoPoints balance and badges are NOT mocked: they come from the live
+// backend (getMyPoints). The redemption catalogue lives in sokoPointsConfig.js.
 export const statementDownloads = [
   { label: "Loan & Savings Statement", sub: "Up to date - Aug 2026", icon: "📊" },
   { label: "Clearance Certificate", sub: "Issued when fully paid", icon: "📜" },

@@ -54,9 +54,7 @@ export default function PortalSelect() {
             </p>
           </div>
           {/* Mobile indicator tag */}
-          <div className="flex items-center gap-2 text-white/50 group-hover:text-white/70 transition-colors">            <span className="text-xs border border-white/20 rounded px-2 py-0.5 font-mono">
-              Mobile-first
-            </span>
+          <div className="flex items-center gap-2 text-white/50 group-hover:text-white/70 transition-colors">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="w-4 h-4"
@@ -86,9 +84,6 @@ export default function PortalSelect() {
           </div>
           {/* Desktop indicator tag */}
           <div className="flex items-center gap-2 text-white/50 group-hover:text-white/70 transition-colors">
-            <span className="text-xs border border-white/20 rounded px-2 py-0.5 font-mono">
-              Desktop
-            </span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="w-4 h-4"
