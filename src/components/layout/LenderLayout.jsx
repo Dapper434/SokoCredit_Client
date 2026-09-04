@@ -6,7 +6,7 @@ import { institution } from "../../data/mockLenderData";
 // "branch_manager" sees everything; "loan_officer" only sees the
 // day-to-day operational screens.
 const navItems = [
-  { to: "/lender/dashboard", label: "Command Center", roles: ["branch_manager"] },
+  { to: "/lender/command-center", label: "Command Center", roles: ["branch_manager"] },
   { to: "/lender/operations", label: "Operations", roles: ["branch_manager", "loan_officer"] },
   { to: "/lender/approvals", label: "Approval Desk", roles: ["branch_manager", "loan_officer"] },
   { to: "/lender/crm", label: "CRM & Profiles", roles: ["branch_manager", "loan_officer"] },
@@ -15,17 +15,20 @@ const navItems = [
 
 // Routes a loan officer should never land on directly via URL —
 // redirected back to Operations if they try.
-const MANAGER_ONLY_PATHS = ["/lender/dashboard", "/lender/staff"];
+const MANAGER_ONLY_PATHS = ["/lender/command-center", "/lender/staff"];
 
 export default function LenderLayout() {
   const navigate = useNavigate();
   const location = useLocation();
 
   const session = getSession();
-  // Backend doesn't return a role yet, so default to branch_manager
-  // (full access) until that's wired up.
-  const role = session?.role || "branch_manager";
-  const staffName = session?.user?.full_name?.trim() || institution.staffName;
+
+  // The Lender Portal has two access levels: Branch Manager and Loan Officer.
+  // The backend may return roles like super_admin, admin, or manager —
+  // all of these map to "branch_manager" (full access) on the frontend.
+  const rawRole = session?.role || session?.user?.role || "branch_manager";
+  const role = rawRole === "loan_officer" ? "loan_officer" : "branch_manager";
+  const staffName = session?.user?.full_name?.trim() || session?.user?.name?.trim() || institution.staffName;
 
   const visibleNav = navItems.filter((item) => item.roles.includes(role));
 
@@ -97,7 +100,20 @@ export default function LenderLayout() {
       </aside>
 
       {/* Main content area where child routes render */}
-      <main className="flex-1 bg-ground overflow-y-auto">
+      <main className="flex-1 bg-ground overflow-y-auto relative">
+        {/* Global Badges */}
+        <div className="absolute top-4 right-4 md:top-8 md:right-8 flex gap-2 md:gap-3 z-10 flex-wrap justify-end max-w-[50%] md:max-w-none">
+          <div className="flex items-center gap-1.5 px-2 py-1 md:px-3 md:py-1.5 rounded-sm bg-status-missed-bg/30 border border-status-missed-text/40">
+            <span className="w-1.5 h-1.5 rounded-full bg-status-missed-text"></span>
+            <span className="text-[9px] md:text-[10px] font-bold text-status-missed-text uppercase tracking-widest whitespace-nowrap">
+              {session?.user?.institution_name || "New Institution"}
+            </span>
+          </div>
+          <div className="flex items-center gap-1.5 px-2 py-1 md:px-3 md:py-1.5 rounded-sm bg-status-paid-bg/30 border border-status-paid-text/40">
+            <span className="text-[9px] md:text-[10px] font-bold text-status-paid-text uppercase tracking-widest whitespace-nowrap">System Live</span>
+          </div>
+        </div>
+        
         <Outlet />
       </main>
     </div>

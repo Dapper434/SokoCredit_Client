@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSessionState } from "../../hooks/useSessionState";
 
 // Standard license types for the dropdown selection
 const LICENSE_TYPES = [
@@ -13,7 +14,7 @@ export default function RegisterStep1() {
   const navigate = useNavigate();
 
   // State object holding all onboarding business data
-  const [form, setForm] = useState({
+  const [form, setForm] = useSessionState("lender_step1", {
     registered_business_name: "",
     registration_number: "",
     kra_pin: "",

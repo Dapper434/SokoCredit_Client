@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useSessionState } from "../../hooks/useSessionState";
 
 const STAFF_RANGES = ["1-5", "6-15", "16-30", "31-60", "60+"];
 const MARKET_OPTIONS = ["Toi Market", "Muthurwa", "Gikomba", "Kangemi", "Wakulima", "Other"];
@@ -10,7 +11,7 @@ export default function RegisterStep2() {
 
   const step1Data = location.state?.step1 || {};
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useSessionState("lender_step2", {
     county_business_permit: "",
     odpc_registration_number: "",
     director_full_name: "",

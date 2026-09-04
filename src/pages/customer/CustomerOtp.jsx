@@ -13,8 +13,8 @@ export default function CustomerOtp() {
 
   return (
     <CustomerAuthFrame>
-      <div className="flex flex-col lg:flex-row min-h-full">
-        <div className="bg-primary px-6 pt-10 pb-12 lg:w-2/5 lg:min-h-screen lg:flex lg:flex-col lg:justify-center lg:px-16 lg:py-0">
+      <div className="flex flex-col md:flex-row min-h-full flex-1">
+        <div className="bg-primary px-6 pt-10 pb-12 md:w-2/5 md:min-h-screen md:flex md:flex-col md:justify-center md:px-12 lg:px-16 md:py-0">
           <button
             onClick={() => navigate("/customer/signin")}
             className="text-white/70 text-sm flex items-center gap-1.5 mb-6 hover:text-white"
@@ -24,15 +24,15 @@ export default function CustomerOtp() {
             </svg>
             Back
           </button>
-          <h1 className="text-2xl lg:text-4xl font-bold text-white mb-1 lg:mb-3">Enter OTP</h1>
-          <p className="text-sm lg:text-lg text-white/70">Code sent to {phone}</p>
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-1 md:mb-3">Enter OTP</h1>
+          <p className="text-sm md:text-base lg:text-lg text-white/70">Code sent to {phone}</p>
         </div>
 
         <div
           className="flex-1 bg-ground rounded-t-[20px] -mt-4 px-6 pt-8 pb-6 flex flex-col gap-8
-                     lg:w-3/5 lg:mt-0 lg:rounded-none lg:flex lg:flex-col lg:justify-center lg:items-center lg:px-16 lg:py-16"
+                     md:w-3/5 md:mt-0 md:rounded-none md:flex md:flex-col md:justify-center md:items-center md:px-12 lg:px-16 md:py-16"
         >
-          <div className="w-full lg:max-w-sm flex flex-col gap-8">
+          <div className="w-full md:max-w-md flex flex-col gap-8 mx-auto md:mx-0">
             <OtpInput length={6} onComplete={() => {}} />
 
             <button

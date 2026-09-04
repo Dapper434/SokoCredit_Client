@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 // Layouts and Pages
 import LenderLayout from "../components/layout/LenderLayout";
@@ -9,6 +10,7 @@ import TwoFactorAuth from "../pages/lender/TwoFactorAuth";
 import RegisterStep1 from "../pages/lender/RegisterStep1";
 import RegisterStep2 from "../pages/lender/RegisterStep2";
 import RegisterStep3 from "../pages/lender/RegisterStep3";
+import RegistrationSuccess from "../pages/lender/RegistrationSuccess";
 
 // Lender dashboard pages
 import CommandCenter from "../pages/lender/CommandCenter";
@@ -40,15 +42,24 @@ export default function LenderRoutes() {
       <Route path="/lender/register" element={<RegisterStep1 />} />
       <Route path="/lender/register/compliance" element={<RegisterStep2 />} />
       <Route path="/lender/register/settlement" element={<RegisterStep3 />} />
+      <Route path="/lender/register/success" element={<RegistrationSuccess />} />
 
       {/* Lender app screens — render inside LenderLayout (sidebar, role-gated) */}
-      <Route path="/lender" element={<LenderLayout />}>
-        <Route index element={<Navigate to="dashboard" replace />} />
-        <Route path="dashboard" element={<CommandCenter />} />
-        <Route path="operations" element={<Operations />} />
-        <Route path="approvals" element={<ApprovalDesk />} />
-        <Route path="crm" element={<CrmProfiles />} />
-        <Route path="staff" element={<StaffAccess />} />
+      <Route path="/lender" element={<ProtectedRoute allowedRoles={['branch_manager', 'loan_officer']} />}>
+        <Route element={<LenderLayout />}>
+          <Route index element={<Navigate to="command-center" replace />} />
+          
+          {/* Branch Manager Only Routes */}
+          <Route element={<ProtectedRoute allowedRoles={['branch_manager']} />}>
+            <Route path="command-center" element={<CommandCenter />} />
+            <Route path="staff" element={<StaffAccess />} />
+          </Route>
+
+          {/* Shared / Loan Officer Routes */}
+          <Route path="operations" element={<Operations />} />
+          <Route path="approvals" element={<ApprovalDesk />} />
+          <Route path="crm" element={<CrmProfiles />} />
+        </Route>
       </Route>
 
       {/* Customer auth/onboarding — render without the mobile shell (full-bleed screens) */}
