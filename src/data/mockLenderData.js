@@ -18,16 +18,16 @@ export const staffRoster = [
 
 // Staff & Access — settlement/rate change requests routed through compliance review
 export const changeRequests = [
-  { id: "CR-2026-001", field: "Default Monthly Interest Rate", oldValue: "15%", newValue: "13%", status: "pending", date: "22 Aug 2026", reason: "Market rate adjustment - borrower retention" },
+  { id: "CR-2026-001", field: "Default Annual Interest Rate (APR)", oldValue: "32.51%", newValue: "29.00%", status: "pending", date: "22 Aug 2026", reason: "Market rate adjustment - borrower retention" },
   { id: "CR-2026-002", field: "Repayment M-Pesa Paybill", oldValue: "123456", newValue: "234567", reason: "Switching to new Safaricom business account", status: "approved", date: "10 Aug 2026" },
   { id: "CR-2026-003", field: "Default Late Penalty Rate", oldValue: "5%", newValue: "3%", reason: "Portfolio growth strategy", status: "rejected", date: "1 Aug 2026" },
 ];
 
 export const changeableFields = [
-  { key: "interest", label: "Default Monthly Interest Rate", current: "15%" },
+  { key: "interest", label: "Default Annual Interest Rate (APR)", current: "32.51%" },
   { key: "penalty", label: "Default Late Penalty Rate", current: "5%" },
   { key: "paybill", label: "Repayment M-Pesa Paybill / Till No.", current: "123456" },
-  { key: "bank", label: "Disbursement Bank Account", current: "Equity Bank - 1234567890" },
+  { key: "airtel", label: "Airtel Money Paybill / Till No.", current: "789012" },
 ];
 
 export const allMarkets = ["Toi Market", "Muthurwa", "Gikomba", "Kangemi", "Wakulima", "Ngara"];
