@@ -1,13 +1,58 @@
-import { useState } from "react";
-import { newApplications, rescheduleRequests } from "../../data/mockLenderData";
+import { useState, useEffect } from "react";
+import { getPendingApplications, approveLoan, rejectLoan, disburseLoan } from "../../lib/api";
+import { rescheduleRequests } from "../../data/mockLenderData";
 
 export default function ApprovalDesk() {
   const [activeTab, setActiveTab] = useState("new");
+  const [applications, setApplications] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchApplications();
+  }, []);
+
+  const fetchApplications = async () => {
+    try {
+      setLoading(true);
+      const data = await getPendingApplications();
+      setApplications(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleApprove = async (loanId) => {
+    try {
+      await approveLoan(loanId);
+      await disburseLoan(loanId); // Auto disburse for demo
+      fetchApplications();
+    } catch (err) {
+      alert("Error approving loan: " + err.message);
+    }
+  };
+
+  const handleReject = async (loanId) => {
+    try {
+      await rejectLoan(loanId);
+      fetchApplications();
+    } catch (err) {
+      alert("Error rejecting loan: " + err.message);
+    }
+  };
 
   return (
     <div className="p-8">
       <h1 className="text-2xl font-bold text-ink mb-1">Approval Desk</h1>
       <p className="text-ink-dim mb-8">Thursday, 20 August 2026</p>
+
+      {error && (
+        <div className="bg-red-50 text-red-600 px-4 py-3 rounded text-sm border border-red-200 mb-6">
+          {error}
+        </div>
+      )}
 
       <div className="flex gap-6 border-b border-border mb-6">
         <button
@@ -20,7 +65,7 @@ export default function ApprovalDesk() {
         >
           New Applications
           <span className="bg-primary-light text-primary text-xs px-2 py-0.5 rounded-full">
-            {newApplications.length}
+            {loading ? "..." : applications.length}
           </span>
         </button>
         <button
@@ -40,79 +85,100 @@ export default function ApprovalDesk() {
 
       {activeTab === "new" && (
         <div className="space-y-4">
-          {newApplications.map((app) => (
-            <div key={app.id} className="bg-surface border border-border rounded-lg p-6">
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <p className="text-xs text-ink-muted mb-1">{app.id}</p>
-                  <p className="font-bold text-ink text-lg">
-                    {app.borrowerName}{" "}
-                    <span className="font-normal text-ink-muted text-sm">
-                      {app.market} · {app.stall}
-                    </span>
-                  </p>
-                </div>
-                <span className="bg-status-pending-bg text-status-pending-text border border-status-pending-border text-xs font-semibold px-3 py-1 rounded-full">
-                  PENDING
-                </span>
+          {loading ? (
+            <p className="text-ink-muted text-sm">Loading applications...</p>
+          ) : applications.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-24 px-4 text-center">
+              <div className="w-16 h-16 rounded-full border-2 border-dashed border-border-dim flex items-center justify-center mb-4">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-6 h-6 text-ink-muted">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
               </div>
-
-              <div className="grid grid-cols-2 gap-6 mb-6">
-                <div>
-                  <p className="text-xs uppercase text-ink-muted tracking-wide mb-2">
-                    Borrower Context
-                  </p>
-                  <p className="text-ink text-sm mb-1">
-                    Tier {app.tier} · In-house score: {app.inHouseScore}/100
-                  </p>
-                  <p className="text-ink-dim text-sm mb-1">Savings track: {app.savingsTrack}</p>
-                  <p className="text-sm">
-                    Stall verified:{" "}
-                    <span className={app.stallVerified ? "text-status-paid-text" : "text-ink-muted"}>
-                      {app.stallVerified ? "Verified" : "Not verified"}
-                    </span>
-                  </p>
-                </div>
-                <div>
-                  <p className="text-xs uppercase text-ink-muted tracking-wide mb-2">
-                    Facility Request
-                  </p>
-                  <div className="flex justify-between text-sm mb-1">
-                    <span className="text-ink-dim">Principal</span>
-                    <span className="text-ink font-semibold">
-                      KES {app.principal.toLocaleString()}
-                    </span>
-                  </div>
-                  <div className="flex justify-between text-sm mb-1">
-                    <span className="text-ink-dim">Term</span>
-                    <span className="text-ink font-semibold">{app.term}</span>
-                  </div>
-                  <div className="flex justify-between text-sm mb-1">
-                    <span className="text-ink-dim">Repayment</span>
-                    <span className="text-ink font-semibold">{app.frequency}</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-ink-dim">Installment</span>
-                    <span className="text-ink font-semibold">
-                      KES {app.installment.toLocaleString()}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex gap-3">
-                <button className="flex-1 bg-primary hover:bg-primary-hover text-white text-sm font-semibold py-2.5 rounded-md">
-                  Approve
-                </button>
-                <button className="flex-1 bg-status-missed-bg hover:opacity-80 text-status-missed-text border border-status-missed-border text-sm font-semibold py-2.5 rounded-md">
-                  Counter-Offer
-                </button>
-                <button className="flex-1 bg-status-overdue-bg hover:opacity-80 text-status-overdue-text border border-status-overdue-border text-sm font-semibold py-2.5 rounded-md">
-                  Reject
-                </button>
-              </div>
+              <h3 className="text-sm font-bold text-ink mb-2">No pending applications</h3>
+              <p className="text-[11px] text-ink-muted max-w-sm mx-auto leading-relaxed">
+                New loan applications submitted by borrowers through the customer app will appear here for review and decision.
+              </p>
             </div>
-          ))}
+          ) : (
+            applications.map((app) => (
+              <div key={app.id} className="bg-surface border border-border rounded-lg p-6">
+                <div className="flex justify-between items-start mb-4">
+                  <div>
+                    <p className="text-xs text-ink-muted mb-1">Loan #{app.id} · Profile ID {app.customer_profile_id}</p>
+                    <p className="font-bold text-ink text-lg">
+                      {app.customer_name}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {app.exceeds_available_credit && (
+                      <span
+                        title={`Requested KES ${Number(app.principal).toLocaleString()} against an available limit of KES ${Number(app.available_credit_at_application).toLocaleString()} at the time of application`}
+                        className="bg-status-overdue-bg text-status-overdue-text border border-status-overdue-border text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap">
+                        OVER LIMIT
+                      </span>
+                    )}
+                    <span className="bg-status-pending-bg text-status-pending-text border border-status-pending-border text-xs font-semibold px-3 py-1 rounded-full">
+                      {app.status.toUpperCase()}
+                    </span>
+                  </div>
+                </div>
+                {app.exceeds_available_credit && (
+                  <p className="text-xs text-status-overdue-text bg-status-overdue-bg/40 border border-status-overdue-border rounded px-3 py-2 mb-4">
+                    Requested <span className="font-mono font-semibold">KES {Number(app.principal).toLocaleString()}</span>
+                    {" "}against an available limit of{" "}
+                    <span className="font-mono font-semibold">KES {Number(app.available_credit_at_application).toLocaleString()}</span>
+                    {" "}— needs manual approval.
+                  </p>
+                )}
+
+                <div className="grid grid-cols-2 gap-6 mb-6">
+                  <div>
+                    <p className="text-xs uppercase text-ink-muted tracking-wide mb-2">
+                      Borrower Context
+                    </p>
+                    <p className="text-ink text-sm mb-1">
+                      Tier {app.customer_tier} · In-house score: Pending
+                    </p>
+                    <p className="text-ink-dim text-sm mb-1">Savings track: Active</p>
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase text-ink-muted tracking-wide mb-2">
+                      Facility Request
+                    </p>
+                    <div className="flex justify-between text-sm mb-1">
+                      <span className="text-ink-dim">Principal</span>
+                      <span className="text-ink font-semibold">
+                        KES {Number(app.principal).toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm mb-1">
+                      <span className="text-ink-dim">Term</span>
+                      <span className="text-ink font-semibold">{app.term_days} days</span>
+                    </div>
+                    <div className="flex justify-between text-sm mb-1">
+                      <span className="text-ink-dim">Repayment</span>
+                      <span className="text-ink font-semibold">{app.repayment_frequency}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex gap-3">
+                  <button 
+                    onClick={() => handleApprove(app.id)}
+                    className="flex-1 bg-primary hover:bg-primary-hover text-white text-sm font-semibold py-2.5 rounded-md"
+                  >
+                    Approve & Disburse
+                  </button>
+                  <button 
+                    onClick={() => handleReject(app.id)}
+                    className="flex-1 bg-status-overdue-bg hover:opacity-80 text-status-overdue-text border border-status-overdue-border text-sm font-semibold py-2.5 rounded-md"
+                  >
+                    Reject
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       )}
 
