@@ -10,9 +10,9 @@ A loan management platform connecting Kenyan microfinance lenders with mama mbog
 | Styling | Tailwind CSS v4 (custom design tokens, see `src/index.css`) |
 | Routing | React Router |
 | Charts | Recharts |
-| Backend | Python (Flask) — in progress |
-| Database | PostgreSQL (planned) |
-| Payments | M-Pesa Daraja API (planned) |
+| Backend | Python (Flask), in the [SokoCredit-Server](https://github.com/Dapper434/SokoCredit-Server) repo |
+| Database | SQLAlchemy (SQLite locally; PostgreSQL-ready) |
+| Payments | M-Pesa Daraja API (sandbox integration on the backend) |
 | Auth | JWT-based sessions, role-based access control |
 
 ## Getting Started
@@ -80,7 +80,7 @@ src/
 
 ## Role-Based Access (Lender Portal)
 
-Two staff roles, selected via a toggle on Lender Sign In until the backend returns real role data:
+Two staff roles. A toggle on Lender Sign In is used for local mock-data flows; a `role` field from the backend login response overrides it:
 
 - **Branch Manager** — full access to every screen
 - **Loan Officer** — Operations, Approval Desk, and CRM & Profiles only; Command Center and Staff & Access are hidden from the sidebar and redirect if accessed directly by URL
@@ -89,24 +89,23 @@ Role is stored in the session (`localStorage`) and read by `LenderLayout` and `T
 
 ## Current Status
 
+The live frontend is at [soko-credit-client.vercel.app](https://soko-credit-client.vercel.app/) and talks to the API at [sokocredit-server.onrender.com](https://sokocredit-server.onrender.com/api/health).
+
 **Built:**
-- Full Lender Portal — all 6 staff-facing screens, RBAC, institution onboarding
-- Full Customer Portal — all 9 borrower-facing screens, responsive from mobile through desktop
+- Full Lender Portal — staff-facing screens, RBAC, institution onboarding
+- Full Customer Portal — borrower-facing screens, responsive from mobile through desktop
 - Shared design system (Tailwind tokens, StatusBadge, OTP input)
-- Backend auth endpoints (login, session handling)
+- Backend in [SokoCredit-Server](https://github.com/Dapper434/SokoCredit-Server): auth, origination, servicing, and M-Pesa sandbox integration
 
-**Not yet built:**
-- Remaining backend API surface (loans, repayments, analytics, M-Pesa integration)
-- Real credit scoring / risk engine (currently mock data)
+**Still in progress:**
+- Some portal screens still use mock data from `src/data/` rather than the live API
+- Real credit scoring / risk engine
 - SMS/WhatsApp notification pipeline
-
-All screens currently run on mock data (`src/data/`) matching the shape real API responses are expected to take, so wiring up the backend should mean swapping data sources rather than rewriting components.
 
 ## Team Workflow
 
-- All work merges into the `development` branch (no `main` yet — created once the full project is complete)
+- The default branch is `development` (there is no `main` branch yet)
 - Feature branches per screen/feature, merged via PR
-- Shared foundation (design tokens, layout shells, mock data) built first; screens built in parallel once that landed
 
 ## Design Reference
 
