@@ -1,42 +1,47 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "../components/ProtectedRoute";
-
-// Layouts and Pages
 import LenderLayout from "../components/layout/LenderLayout";
 import CustomerLayout from "../components/layout/CustomerLayout";
-import PortalSelect from "../pages/PortalSelect";
-import SignIn from "../pages/lender/SignIn";
-import TwoFactorAuth from "../pages/lender/TwoFactorAuth";
-import RegisterStep1 from "../pages/lender/RegisterStep1";
-import RegisterStep2 from "../pages/lender/RegisterStep2";
-import RegisterStep3 from "../pages/lender/RegisterStep3";
-import RegistrationSuccess from "../pages/lender/RegistrationSuccess";
 
-// Lender dashboard pages
-import CommandCenter from "../pages/lender/CommandCenter";
-import Operations from "../pages/lender/Operations";
-import ApprovalDesk from "../pages/lender/ApprovalDesk";
-import CrmProfiles from "../pages/lender/CrmProfiles";
-import StaffAccess from "../pages/lender/StaffAccess";
+const PortalSelect = lazy(() => import("../pages/PortalSelect"));
+const SignIn = lazy(() => import("../pages/lender/SignIn"));
+const TwoFactorAuth = lazy(() => import("../pages/lender/TwoFactorAuth"));
+const RegisterStep1 = lazy(() => import("../pages/lender/RegisterStep1"));
+const RegisterStep2 = lazy(() => import("../pages/lender/RegisterStep2"));
+const RegisterStep3 = lazy(() => import("../pages/lender/RegisterStep3"));
+const RegistrationSuccess = lazy(() => import("../pages/lender/RegistrationSuccess"));
+const CommandCenter = lazy(() => import("../pages/lender/CommandCenter"));
+const Operations = lazy(() => import("../pages/lender/Operations"));
+const ApprovalDesk = lazy(() => import("../pages/lender/ApprovalDesk"));
+const CrmProfiles = lazy(() => import("../pages/lender/CrmProfiles"));
+const StaffAccess = lazy(() => import("../pages/lender/StaffAccess"));
+const CustomerSignIn = lazy(() => import("../pages/customer/CustomerSignIn"));
+const CustomerOtp = lazy(() => import("../pages/customer/CustomerOtp"));
+const CustomerOnboardStep1 = lazy(() => import("../pages/customer/CustomerOnboardStep1"));
+const CustomerOnboardStep2 = lazy(() => import("../pages/customer/CustomerOnboardStep2"));
+const CustomerCreditCheck = lazy(() => import("../pages/customer/CustomerCreditCheck"));
+const MyHub = lazy(() => import("../pages/customer/MyHub"));
+const LoanWizard = lazy(() => import("../pages/customer/LoanWizard"));
+const ActivePortfolio = lazy(() => import("../pages/customer/ActivePortfolio"));
+const ProfileCenter = lazy(() => import("../pages/customer/ProfileCenter"));
 
-// Customer Portal pages
-import CustomerSignIn from "../pages/customer/CustomerSignIn";
-import CustomerOtp from "../pages/customer/CustomerOtp";
-import CustomerOnboardStep1 from "../pages/customer/CustomerOnboardStep1";
-import CustomerOnboardStep2 from "../pages/customer/CustomerOnboardStep2";
-import CustomerCreditCheck from "../pages/customer/CustomerCreditCheck";
-import MyHub from "../pages/customer/MyHub";
-import LoanWizard from "../pages/customer/LoanWizard";
-import ActivePortfolio from "../pages/customer/ActivePortfolio";
-import ProfileCenter from "../pages/customer/ProfileCenter";
+function PageFallback() {
+  return (
+    <div className="flex min-h-screen items-center justify-center text-sm text-neutral-500">
+      Loading…
+    </div>
+  );
+}
 
 export default function LenderRoutes() {
   return (
+    <Suspense fallback={<PageFallback />}>
     <Routes>
-      {/* Landing page where user selects Customer vs Lender portal */}
+      {/* Shared Landing Page */}
       <Route path="/" element={<PortalSelect />} />
 
-      {/* Lender auth screens — render without the sidebar */}
+      {/* Lender Portal — Public */}
       <Route path="/lender/signin" element={<SignIn />} />
       <Route path="/lender/mfa" element={<TwoFactorAuth />} />
       <Route path="/lender/register" element={<RegisterStep1 />} />
@@ -44,7 +49,7 @@ export default function LenderRoutes() {
       <Route path="/lender/register/settlement" element={<RegisterStep3 />} />
       <Route path="/lender/register/success" element={<RegistrationSuccess />} />
 
-      {/* Lender app screens — render inside LenderLayout (sidebar, role-gated) */}
+      {/* Lender Portal — Protected */}
       <Route path="/lender" element={<ProtectedRoute allowedRoles={['branch_manager', 'loan_officer']} />}>
         <Route element={<LenderLayout />}>
           <Route index element={<Navigate to="command-center" replace />} />
@@ -62,23 +67,25 @@ export default function LenderRoutes() {
         </Route>
       </Route>
 
-      {/* Customer auth/onboarding — render without the mobile shell (full-bleed screens) */}
+      {/* Customer Portal — Public (pre-login + onboarding) */}
       <Route path="/customer/signin" element={<CustomerSignIn />} />
       <Route path="/customer/otp" element={<CustomerOtp />} />
       <Route path="/customer/onboarding/1" element={<CustomerOnboardStep1 />} />
       <Route path="/customer/onboarding/2" element={<CustomerOnboardStep2 />} />
       <Route path="/customer/creditcheck" element={<CustomerCreditCheck />} />
 
-      {/* Customer app screens — render inside CustomerLayout (bottom nav) */}
+      {/* Customer Portal — Authenticated (uses CustomerLayout) */}
+      <Route element={<ProtectedRoute allowedRoles={['customer']} />}>
         <Route path="/customer" element={<CustomerLayout />}>        <Route index element={<Navigate to="hub" replace />} />
         <Route path="hub" element={<MyHub />} />
         <Route path="loan" element={<LoanWizard />} />
         <Route path="portfolio" element={<ActivePortfolio />} />
         <Route path="profile" element={<ProfileCenter />} />
+        </Route>
       </Route>
 
-      {/* Catch-all fallback route - redirects unknown URLs back to the landing page */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
+    </Suspense>
   );
 }
