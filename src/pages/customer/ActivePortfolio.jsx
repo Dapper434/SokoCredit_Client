@@ -5,7 +5,7 @@ import {
   getMyLoans, getCustomerSchedule, getCheckins,
   initiateRepaymentStk, getTransactionStatus, simulateMpesaCallback,
 } from "../../lib/api";
-import { arrearsBanners, extensionReasons, extensionTerms, repaymentSchedule as mockSchedule } from "../../data/mockCustomerData";
+import { arrearsBanners, extensionReasons, extensionTerms } from "../../data/mockCustomerData";
 
 function kes(n) {
   return n === 0 ? "—" : Number(n).toLocaleString("en-KE");
@@ -19,7 +19,7 @@ export default function ActivePortfolio() {
   const [latest, setLatest] = useState(null);
   const [schedule, setSchedule] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error] = useState(null);
   const [paying, setPaying] = useState(false);
   const [payStatus, setPayStatus] = useState(null); // null | "waiting" | "done" | "failed"
   const [payError, setPayError] = useState(null);

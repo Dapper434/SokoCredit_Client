@@ -40,7 +40,6 @@ export default function MyHub() {
 
   // ── Loan state (to derive journey progress) ────────────────────────
   const [loans, setLoans] = useState([]);
-  const [loansLoaded, setLoansLoaded] = useState(false);
 
   useEffect(() => {
     // Load check-in history
@@ -50,8 +49,8 @@ export default function MyHub() {
 
     // Load loans to derive journey step 3+4
     getMyLoans()
-      .then((data) => { setLoans(data); setLoansLoaded(true); })
-      .catch(() => setLoansLoaded(true));
+      .then((data) => { setLoans(data); })
+      .catch(() => {});
       
     // Load actual available credit
     if (session?.user?.customer_profile_id) {
@@ -70,7 +69,7 @@ export default function MyHub() {
 
   // Still pull the populated-user stats from mock (for the "existing user" view)
   const {
-    hasActiveLoan, inArrears,
+    inArrears,
     onTimeRate, completedCycles, reliability,
   } = borrowerProfile;
 

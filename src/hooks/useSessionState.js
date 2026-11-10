@@ -5,7 +5,7 @@ export function useSessionState(key, initialValue) {
     try {
       const storedValue = sessionStorage.getItem(key);
       return storedValue !== null ? JSON.parse(storedValue) : initialValue;
-    } catch (e) {
+    } catch {
       return initialValue;
     }
   });

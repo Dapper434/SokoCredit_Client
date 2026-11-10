@@ -10,7 +10,7 @@ export default function Operations() {
   const [activeLoans, setActiveLoans] = useState([]);
   const [paidLoans, setPaidLoans] = useState([]);
   const [savingsRows, setSavingsRows] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [tab, setTab] = useState("collections"); // "collections" | "savings"
 
   useEffect(() => {

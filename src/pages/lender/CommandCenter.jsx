@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { portfolioKpis, parAgingBreakdown as basePar, collectionEfficiencyTrend as baseTrend, marketClusters, borrowers } from "../../data/mockLenderData";
 import { getStaffMembers, getSession } from "../../lib/api";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 const KPIS_BASE = [
   ["Gross Loan Portfolio", portfolioKpis.grossLoanPortfolio],
@@ -10,13 +10,6 @@ const KPIS_BASE = [
   ["MTD Collection Efficiency", portfolioKpis.mtdCollectionEfficiency],
   ["Net Interest Margin", portfolioKpis.netInterestMargin],
 ];
-const TREND = { up: "text-status-overdue-text text-xs", down: "text-status-paid-text text-xs" };
-const RISK = {
-  High: "bg-status-missed-bg text-status-missed-text border-status-missed-border",
-  Medium: "bg-status-due-bg text-status-due-text border-status-due-border",
-  Low: "bg-status-paid-bg text-status-paid-text border-status-paid-border",
-};
-
 export default function CommandCenter() {
   // Toggle this to see the populated mock data state
   const hasData = true;

@@ -10,12 +10,6 @@ const STAFF_STATUS_STYLES = {
   invited: "bg-status-due-bg text-status-due-text border-status-due-border",
 };
 
-const CHANGE_STATUS_LABELS = {
-  pending: "Pending SokoCredit Review",
-  approved: "Approved",
-  rejected: "Rejected",
-};
-
 // Maps frontend field keys to backend SETTLEMENT_FIELDS column names
 const FIELD_KEY_TO_COLUMN = {
   interest: "default_interest_rate",
@@ -55,7 +49,7 @@ export default function StaffAccess() {
       setLoading(true);
       const data = await getStaffMembers();
       setStaffRoster(data);
-    } catch (err) {
+    } catch {
       toast("Failed to load staff roster", "error");
     } finally {
       setLoading(false);

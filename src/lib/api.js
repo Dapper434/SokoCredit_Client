@@ -1,5 +1,4 @@
 const API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:5000";
-const SESSION_KEY = "sokocredit_session";
 
 function formatApiError(data, fallback) {
   if (typeof data.error === "string") return data.error;
@@ -50,7 +49,7 @@ export const getSession = () => {
   if (user) {
     try {
       parsedUser = JSON.parse(user);
-    } catch (e) {
+    } catch {
       // If parsing fails, the session is corrupted (e.g. from previous bugs)
       console.error("Corrupted session data. Clearing session.");
       clearSession();
